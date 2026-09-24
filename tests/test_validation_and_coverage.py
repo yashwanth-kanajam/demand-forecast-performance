@@ -23,8 +23,8 @@ HEADER = ('"Balancing Authority","Data Date","Hour Number","Local Time at End of
 
 def one_day_cfg(tmp_path: Path, day=date(2025, 7, 1)):
     cfg = load_config()
-    return replace(cfg, raw_dir=tmp_path, start_local_date=day,
-                   end_local_date=date.fromordinal(day.toordinal() + 1))
+    return replace(cfg, raw_dir=tmp_path, start_ref_date=day,
+                   end_ref_date=date.fromordinal(day.toordinal() + 1))
 
 
 def synthetic_raw(hours=24, drop=(), forecast_missing=(), actual_missing=(), eia_replaced=()):
@@ -92,8 +92,8 @@ def test_forecast_classification():
 
 
 def test_non_numeric_source_value_fails_loudly(tmp_path):
-    cfg = replace(load_config(), raw_dir=tmp_path, start_local_date=date(2025, 7, 1),
-                  end_local_date=date(2025, 7, 2))
+    cfg = replace(load_config(), raw_dir=tmp_path, start_ref_date=date(2025, 7, 1),
+                  end_ref_date=date(2025, 7, 2))
     (tmp_path / "EIA930_BALANCE_2025_Jul_Dec.csv").write_text(
         HEADER + '\n"TST","07/01/2025","1","07/01/2025 1:00:00 AM","07/01/2025 6:00:00 AM","1,000","n/a",""\n')
     with pytest.raises(ValueError):
@@ -101,8 +101,8 @@ def test_non_numeric_source_value_fails_loudly(tmp_path):
 
 
 def test_thousands_separators_are_parsed(tmp_path):
-    cfg = replace(load_config(), raw_dir=tmp_path, start_local_date=date(2025, 7, 1),
-                  end_local_date=date(2025, 7, 2))
+    cfg = replace(load_config(), raw_dir=tmp_path, start_ref_date=date(2025, 7, 1),
+                  end_ref_date=date(2025, 7, 2))
     (tmp_path / "EIA930_BALANCE_2025_Jul_Dec.csv").write_text(
         HEADER + '\n"TST","07/01/2025","1","07/01/2025 1:00:00 AM","07/01/2025 6:00:00 AM","1,000","1,010",""\n')
     raw = read_balance_files(cfg)
@@ -150,4 +150,4 @@ def test_gate_requires_all_three_thresholds(tmp_path):
 def test_rows_outside_window_are_excluded(tmp_path):
     raw = synthetic_raw(hours=30)  # 6 hours spill into 2025-07-02 local
     hourly, _ = build_hourly(raw, CANDIDATES, one_day_cfg(tmp_path))
-    assert len(hourly) == 24 and hourly["local_date"].nunique() == 1
+    assert len(hourly) == 24 and hourly["ref_date"].nunique() == 1

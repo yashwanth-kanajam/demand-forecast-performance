@@ -7,7 +7,7 @@ import pytest
 from dfp.config import load_config
 from dfp.validate import assert_curated_contract
 
-CURATED = Path(__file__).resolve().parents[1] / "data" / "curated" / "hourly_forecast_performance.parquet"
+CURATED = Path(__file__).resolve().parents[1] / "data" / "curated" / "fact_hourly_performance.parquet"
 pytestmark = pytest.mark.skipif(not CURATED.exists(), reason="run `python -m dfp.pipeline` first")
 
 
@@ -29,7 +29,7 @@ def test_every_selected_ba_has_the_full_utc_grid(hourly):
 
 
 def test_local_days_have_23_24_or_25_hours(hourly):
-    per_day = hourly.groupby(["ba_code", "local_date"]).size()
+    per_day = hourly.groupby(["ba_code", "ref_date"]).size()
     assert set(per_day.unique()) <= {23, 24, 25}
     for ba, tz in hourly.groupby("ba_code")["reference_time_zone"].first().items():
         counts = per_day.loc[ba].value_counts()

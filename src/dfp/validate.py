@@ -53,10 +53,10 @@ def resolve_duplicates(df: pd.DataFrame, key: list[str], value_cols: list[str]) 
                  "conflicting_keys": conflicting}
 
 
-def check_local_time_consistency(df: pd.DataFrame) -> pd.DataFrame:
+def check_reference_time_consistency(df: pd.DataFrame) -> pd.DataFrame:
     """Compare derived local attributes with EIA's own local columns, per BA.
 
-    Expects columns eia_local_end, eia_data_date, local_period_end, local_date.
+    Expects columns eia_local_end, eia_data_date, ref_period_end, ref_date.
     A mismatch means the assigned reference zone does not reproduce EIA's local
     time for that row.
     """
@@ -64,8 +64,8 @@ def check_local_time_consistency(df: pd.DataFrame) -> pd.DataFrame:
     eia_date = pd.to_datetime(df["eia_data_date"], format="%m/%d/%Y")
     res = pd.DataFrame({
         "ba_code": df["ba_code"],
-        "local_end_mismatch": (eia_local.values != df["local_period_end"].values),
-        "local_date_mismatch": (eia_date.values != df["local_date"].values),
+        "ref_end_mismatch": (eia_local.values != df["ref_period_end"].values),
+        "ref_date_mismatch": (eia_date.values != df["ref_date"].values),
     })
     return res.groupby("ba_code").sum().astype(int).reset_index()
 

@@ -8,7 +8,7 @@ Run: 2026-09-24. Source files retrieved 2026-09-24 19:06–19:08 UTC; all were l
 
 ## Window
 
-`[2023-09-01 00:00, 2026-09-01 00:00)` in each BA's reference local calendar: 36 complete local months and 26,304 expected UTC hours per BA. August 2026 is the last complete month on the retrieval date.
+`[2023-09-01 00:00, 2026-09-01 00:00)` in each BA's reference-time calendar (the clock EIA reports the BA in; see docs/data_contract.md): 36 complete months and 26,304 expected UTC hours per BA. August 2026 is the last complete month on the retrieval date.
 
 ## Candidate population
 
@@ -21,8 +21,8 @@ Five BAs fail the gate: BHBA and SWPW (activated April 2026), WACM and WAUW (ret
 The criteria were applied in this order. **No forecast-error metric had been computed when the selection was made.**
 
 1. **Gate PASS**: 50 BAs.
-2. **Reporting stability**: every one of the 36 local months has ≥ 95% paired coverage, which is the same gate applied at monthly grain. 29 BAs qualify. This excludes ERCO (one month at 90.32%), CISO (4 months), MISO (1 month) and SWPP (2 months).
-3. **Plausibility screen**: PSEI excluded. Its reported forecast falls outside 0.5–2× the reported actual in 5,001 hours (19%), which suggests a series-definition problem rather than forecast behaviour. The other eligible BAs have 0–248 such hours. This check counts only a ratio band. It is not an error metric.
+2. **Reporting stability**: every one of the 36 reference-time months has ≥ 95% paired coverage, which is the same gate applied at monthly grain. 29 BAs qualify. This excludes ERCO (one month at 90.32%), CISO (4 months), MISO (1 month) and SWPP (2 months).
+3. **Pre-analysis quality-anomaly screen**, applied uniformly to all 29 BAs: exclude a BA if its reported forecast falls outside 0.5–2× its reported actual in more than 5% of hours. At Phase 0 the screen excluded PSEI on this count without a stated cutoff. The 5% rule was formalized after the Phase 0 review, still before any error metric was computed, and it does not change the selection. Applied to all 29 BAs it excludes one: **PSEI**, at 5,001 hours (19.0%). The next highest eligible BA is WALC at 248 hours (0.9%). This is recorded as a *pre-analysis quality anomaly / source-semantic concern requiring confirmation*. It is **not** confirmed bad data. Forecast-vs-actual divergence is partly the outcome this project studies, and PSEI's reported values may be correct. Confirming the cause would need information from EIA or PSEI that the files do not contain.
 4. **Diversity** among the rest: one BA per EIA region where possible, a spread of time zones including one fixed-offset BA, scale from about 1.6 GW to 92 GW median demand, and a mix of organization types.
 
 | BA | Region | Reference zone | Median demand (MW) | Paired % | Min monthly % | Why |
@@ -53,7 +53,7 @@ Not represented: Texas and California. No large BA from either passes the monthl
 | Conflicting duplicates | 0 |
 | Missing usable actual hours (candidates) | 57,326 |
 | Missing usable forecast hours (candidates) | 62,046 |
-| Local-time reproduction mismatches | 0, after the MISO/LGEE fixed-EST override (before it: 38,586 local-time and 1,608 local-date mismatches, all MISO/LGEE) |
+| Reference-time reproduction mismatches (vs EIA local columns) | 0, after the MISO/LGEE fixed-EST override (before it: 38,586 local-time and 1,608 local-date mismatches, all MISO/LGEE) |
 
 Quality and revision flags. EIA publishes no per-value quality flag, but three signals exist:
 
@@ -65,7 +65,7 @@ Quality and revision flags. EIA publishes no per-value quality flag, but three s
 
 ## Coverage table: all 55 candidate BAs
 
-Bold = selected. "Min monthly" and "Months <95%" are paired coverage by local month.
+Bold = selected. "Min monthly" and "Months <95%" are paired coverage by reference-time month.
 
 | BA | Name | Expected hrs | Actual hrs | Forecast hrs | Paired hrs | Actual % | Forecast % | Paired % | Gate | Min monthly paired % | Months <95% |
 |---|---|--:|--:|--:|--:|--:|--:|--:|---|--:|--:|

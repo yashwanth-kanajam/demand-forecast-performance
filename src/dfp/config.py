@@ -15,14 +15,17 @@ class Config:
     balance_file_url: str
     reference_table_url: str
     raw_dir: Path
-    start_local_date: date
-    end_local_date: date
+    start_ref_date: date
+    end_ref_date: date
     min_actual_coverage: float
     min_forecast_coverage: float
     min_paired_coverage: float
     timezones: dict[str, str]
     timezone_overrides: dict[str, str] = field(default_factory=dict)
     selected_bas: list[str] = field(default_factory=list)
+    analysis: dict = field(default_factory=dict)
+    exceptions: dict = field(default_factory=dict)
+    source_flagged_bas: list[str] = field(default_factory=list)
 
 
 def load_config(path: Path = DEFAULT_CONFIG, **overrides) -> Config:
@@ -31,16 +34,19 @@ def load_config(path: Path = DEFAULT_CONFIG, **overrides) -> Config:
         balance_file_url=raw["source"]["balance_file_url"],
         reference_table_url=raw["source"]["reference_table_url"],
         raw_dir=PROJECT_ROOT / raw["source"]["raw_dir"],
-        start_local_date=date.fromisoformat(raw["window"]["start_local_date"]),
-        end_local_date=date.fromisoformat(raw["window"]["end_local_date"]),
+        start_ref_date=date.fromisoformat(raw["window"]["start_ref_date"]),
+        end_ref_date=date.fromisoformat(raw["window"]["end_ref_date"]),
         min_actual_coverage=raw["gate"]["min_actual_coverage"],
         min_forecast_coverage=raw["gate"]["min_forecast_coverage"],
         min_paired_coverage=raw["gate"]["min_paired_coverage"],
         timezones=dict(raw["timezones"]),
         timezone_overrides=dict(raw.get("timezone_overrides", {})),
         selected_bas=list(raw["selection"]["selected_bas"]),
+        analysis=dict(raw.get("analysis", {})),
+        exceptions=dict(raw.get("exceptions", {})),
+        source_flagged_bas=list(raw.get("source_semantics", {}).get("flagged_bas", [])),
     )
     values.update({k: v for k, v in overrides.items() if v is not None})
-    if values["start_local_date"] >= values["end_local_date"]:
-        raise ValueError("start_local_date must precede end_local_date")
+    if values["start_ref_date"] >= values["end_ref_date"]:
+        raise ValueError("start_ref_date must precede end_ref_date")
     return Config(**values)

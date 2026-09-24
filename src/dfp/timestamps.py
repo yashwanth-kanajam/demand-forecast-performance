@@ -1,10 +1,14 @@
 """Timestamp rules.
 
 The canonical fact key is (ba_code, utc_period_end). EIA-930 timestamps are
-hour-ending: the row stamped 14:00 UTC covers 13:00-14:00 UTC. Local
-attributes are derived from the UTC interval start converted to the BA's
-reference zone, never parsed from the source's local-time string (that
-string repeats during the fall-back hour).
+hour-ending: the row stamped 14:00 UTC covers 13:00-14:00 UTC.
+
+"Reference time" (ref_*) is the clock EIA uses to report each BA. For most BAs
+it is ordinary civil time; for some (MISO, LGEE, and "Arizona"-labelled BAs outside Arizona)
+it is a fixed offset that differs from civil time for part of the year
+(e.g. PNM is reported on fixed MST although New Mexico observes DST).
+Reference attributes are derived from the UTC interval start, never parsed
+from the source local-time string (that string repeats during fall-back).
 """
 from __future__ import annotations
 
@@ -22,14 +26,14 @@ def parse_eia_timestamp(values: pd.Series) -> pd.Series:
 
 
 def window_bounds_utc(start_local: date, end_local: date, tz: str) -> tuple[pd.Timestamp, pd.Timestamp]:
-    """UTC instants of local midnight at start and end (end exclusive)."""
+    """UTC instants of reference-time midnight at start and end (end exclusive)."""
     start = pd.Timestamp(start_local).tz_localize(tz).tz_convert("UTC")
     end = pd.Timestamp(end_local).tz_localize(tz).tz_convert("UTC")
     return start, end
 
 
 def expected_period_ends(start_local: date, end_local: date, tz: str) -> pd.DatetimeIndex:
-    """Every hour-ending UTC timestamp whose interval falls inside the local window.
+    """Every hour-ending UTC timestamp whose interval falls inside the reference-time window.
 
     Counted on the UTC sequence, so a spring-forward day contributes 23 hours and
     a fall-back day 25; never days * 24.
@@ -38,11 +42,11 @@ def expected_period_ends(start_local: date, end_local: date, tz: str) -> pd.Date
     return pd.date_range(start + ONE_HOUR, end, freq="h", tz="UTC")
 
 
-def derive_local_attributes(utc_period_end: pd.Series, tz: str) -> pd.DataFrame:
-    """Local calendar attributes for hour-ending UTC timestamps in one zone.
+def derive_reference_attributes(utc_period_end: pd.Series, tz: str) -> pd.DataFrame:
+    """BA reference-time attributes for hour-ending UTC timestamps in one zone.
 
-    local_hour is hour-beginning (0-23): local_hour 17 is 17:00-18:00 local.
-    On a fall-back day local_hour 1 occurs twice; the two rows differ in
+    ref_hour is hour-beginning (0-23): ref_hour 17 is 17:00-18:00 reference time.
+    On a fall-back day ref_hour 1 occurs twice; the two rows differ in
     utc_offset_hours and is_dst, and remain unique on the UTC key.
     """
     utc_end = pd.DatetimeIndex(utc_period_end)
@@ -58,10 +62,10 @@ def derive_local_attributes(utc_period_end: pd.Series, tz: str) -> pd.DataFrame:
     return pd.DataFrame(
         {
             "utc_period_start": utc_start,
-            "local_period_start": local_start.tz_localize(None),
-            "local_period_end": local_end.tz_localize(None),
-            "local_date": local_start.tz_localize(None).normalize(),
-            "local_hour": local_start.hour,
+            "ref_period_start": local_start.tz_localize(None),
+            "ref_period_end": local_end.tz_localize(None),
+            "ref_date": local_start.tz_localize(None).normalize(),
+            "ref_hour": local_start.hour,
             "utc_offset_hours": offsets,
             "is_dst": dst,
         },

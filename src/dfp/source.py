@@ -82,7 +82,7 @@ def acquire(cfg: Config, refresh: bool = False) -> list[dict]:
     records = []
     targets = [
         (cfg.balance_file_url.format(year=y, half=h), cfg.raw_dir / f"EIA930_BALANCE_{y}_{h}.csv")
-        for y, h in balance_file_names(cfg.start_local_date, cfg.end_local_date)
+        for y, h in balance_file_names(cfg.start_ref_date, cfg.end_ref_date)
     ]
     targets.append((cfg.reference_table_url, cfg.raw_dir / "EIA930_Reference_Tables.xlsx"))
     for url, dest in targets:
@@ -109,7 +109,7 @@ def read_balance_files(cfg: Config) -> pd.DataFrame:
     non-numeric text (including 'n/a', 'NULL') raises.
     """
     frames = []
-    for year, half in balance_file_names(cfg.start_local_date, cfg.end_local_date):
+    for year, half in balance_file_names(cfg.start_ref_date, cfg.end_ref_date):
         name = f"EIA930_BALANCE_{year}_{half}.csv"
         df = pd.read_csv(cfg.raw_dir / name, usecols=list(SOURCE_COLUMNS), dtype=str,
                          keep_default_na=False, na_values=[""])

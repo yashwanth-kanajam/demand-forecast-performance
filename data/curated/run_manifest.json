@@ -1,6 +1,6 @@
 {
-  "run_at_utc": "2026-09-24T19:16:32+00:00",
-  "window_local": {
+  "run_at_utc": "2026-09-24T20:51:25+00:00",
+  "window_ref": {
     "start": "2023-09-01",
     "end_exclusive": "2026-09-01"
   },
@@ -193,5 +193,26 @@
     "AECI",
     "PNM"
   ],
+  "analysis_parameters": {
+    "analysis": {
+      "naive_lag_days": 7,
+      "correction_window_days": 28,
+      "correction_gap_days": 2,
+      "correction_min_days": 14,
+      "high_demand_quantile": 0.9,
+      "demand_bands": 5,
+      "worst_share": 0.01,
+      "project_rule_relative_change": 0.05,
+      "naive_skill_project_rule": 0.2
+    },
+    "exceptions": {
+      "persistent_bias_pct": 1.0,
+      "hour_bias_pct": 2.0,
+      "hour_bias_min_hours": 3,
+      "high_demand_bias_pct": 1.0,
+      "extreme_concentration_multiple": 2.0,
+      "season_deterioration_ratio": 1.25
+    }
+  },
   "curated_rows": 210432
 }

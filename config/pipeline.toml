@@ -12,8 +12,8 @@ raw_dir = "data/raw"
 [window]
 # Evaluation window in each BA's reference local calendar: [start, end).
 # Converted to UTC per BA; expected hours are counted on the UTC sequence.
-start_local_date = "2023-09-01"
-end_local_date = "2026-09-01"
+start_ref_date = "2023-09-01"
+end_ref_date = "2026-09-01"
 
 [gate]
 min_actual_coverage = 0.95
@@ -42,3 +42,38 @@ LGEE = "Etc/GMT+5"
 # scale/geographic/time-zone diversity only; no error metric was computed
 # before selection. Rationale: reports/phase0_gate.md.
 selected_bas = ["PJM", "SOCO", "TVA", "ISNE", "BPAT", "PSCO", "AECI", "PNM"]
+
+[analysis]
+# Fixed before any forecast-error result was computed (docs/metric_catalogue.md).
+# Changing these is a sensitivity analysis, not a re-selection.
+naive_lag_days = 7                 # seasonal naive: same BA reference-clock hour, 7 calendar days earlier
+correction_window_days = 28        # trailing adjustment: history length (days); residual = actual - forecast
+correction_gap_days = 2            # target day D uses residuals from days D-29 .. D-2
+correction_min_days = 14           # minimum days with residuals in the window
+high_demand_quantile = 0.90        # high-demand hours: top decile of actual, per BA, whole window
+demand_bands = 5                   # demand-level bands: quintiles (Q1 lowest .. Q5 highest) of actual, per BA, whole window
+# Large-miss share: evaluated and omitted (confounded by stable bias); see docs/metric_catalogue.md.
+worst_share = 0.01                 # worst-1% error contribution
+project_rule_relative_change = 0.05 # project-defined practical-improvement rule (not an industry threshold)
+naive_skill_project_rule = 0.20    # project rule: published beats naive if 1 - WAPE_pub/WAPE_naive >= 0.20
+
+[exceptions]
+persistent_bias_pct = 1.0          # |normalized bias| >= 1.0%, same sign in all evaluation years
+hour_bias_pct = 2.0                # BA x ref_hour |normalized bias| >= 2.0%, same sign in all years ...
+hour_bias_min_hours = 3            # ... in at least 3 reference hours
+high_demand_bias_pct = 1.0         # high-demand normalized bias <= -1.0% (or >= +1.0%) in all years, on both
+                                   # actual-defined and forecast-defined high-demand hours
+extreme_concentration_multiple = 2.0   # worst-1% share >= 2x Gaussian reference
+season_deterioration_ratio = 1.25  # season WAPE >= 1.25 x BA overall WAPE in every season-year
+
+[source_semantics]
+# Set from docs/source_semantics_audit.md (official EIA metadata and data checks),
+# not from forecast performance. Flag = SOURCE-SEMANTIC / FORECAST-LEVEL ANOMALY.
+flagged_bas = ["PNM", "PSCO"]
+
+[categories]
+# Project-defined practical-improvement rule (not an industry materiality threshold):
+# corrected WAPE >= 5% lower than published on the common set AND lower in all 3 evaluation years.
+# A: rule met, no source flag.  B: rule met, source flag.
+# C: persistent directional bias (exception rule) but practical-improvement rule not met.
+# D: |normalized bias| < 1% and rule not met.

@@ -1,0 +1,9 @@
+ba_code,ba_name,region_name,eia_time_zone_label,reference_time_zone,median_actual_mw,paired_coverage_pct
+AECI,"Associated Electric Cooperative, Inc.",Midwest,Central,America/Chicago,2337.0,100.0
+BPAT,Bonneville Power Administration,Northwest,Pacific,America/Los_Angeles,6830.0,100.0
+ISNE,ISO New England,New England,Eastern,America/New_York,12866.0,99.99
+PJM,"PJM Interconnection, LLC",Mid-Atlantic,Eastern,America/New_York,91870.0,99.54
+PNM,Public Service Company of New Mexico,Southwest,Arizona,America/Phoenix,1627.0,100.0
+PSCO,Public Service Company of Colorado,Northwest,Mountain,America/Denver,5070.0,99.92
+SOCO,"Southern Company Services, Inc. - Trans",Southeast,Central,America/Chicago,26058.0,99.98
+TVA,Tennessee Valley Authority,Tennessee,Central,America/Chicago,18136.0,99.98

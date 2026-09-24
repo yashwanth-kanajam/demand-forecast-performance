@@ -1,4 +1,4 @@
-ba_code,local_month,expected_hours,actual_hours,forecast_hours,paired_hours,paired_coverage_pct
+ba_code,ref_month,expected_hours,actual_hours,forecast_hours,paired_hours,paired_coverage_pct
 AECI,2023-09,720,720,720,720,100.0
 AECI,2023-10,744,744,744,744,100.0
 AECI,2023-11,721,721,721,721,100.0

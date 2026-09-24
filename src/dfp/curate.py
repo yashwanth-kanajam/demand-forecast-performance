@@ -4,10 +4,10 @@ from __future__ import annotations
 import pandas as pd
 
 from .config import Config
-from .timestamps import derive_local_attributes, expected_period_ends
+from .timestamps import derive_reference_attributes, expected_period_ends
 from .validate import (
     assert_curated_contract,
-    check_local_time_consistency,
+    check_reference_time_consistency,
     classify_actual,
     classify_forecast,
     range_profile,
@@ -15,8 +15,8 @@ from .validate import (
 )
 
 CURATED_COLUMNS = [
-    "ba_code", "utc_period_end", "utc_period_start", "local_period_start", "local_date",
-    "local_hour", "utc_offset_hours", "is_dst", "reference_time_zone",
+    "ba_code", "utc_period_end", "utc_period_start", "ref_period_start", "ref_date",
+    "ref_hour", "utc_offset_hours", "is_dst", "reference_time_zone",
     "source_row_present", "actual_mw", "actual_status", "forecast_mw", "forecast_status",
     "is_paired", "actual_mw_reported", "forecast_mw_reported", "source_file",
 ]
@@ -57,15 +57,15 @@ def build_hourly(raw: pd.DataFrame, candidates: pd.DataFrame, cfg: Config) -> tu
     for ba, tz in zones.items():
         rows = df[df["ba_code"] == ba]
         # Zone check runs on every source row for the BA, inside and outside the window.
-        local = derive_local_attributes(rows["utc_period_end"], tz)
-        tz_checks.append(check_local_time_consistency(pd.concat([rows[["ba_code", "eia_local_end", "eia_data_date"]], local], axis=1)))
+        local = derive_reference_attributes(rows["utc_period_end"], tz)
+        tz_checks.append(check_reference_time_consistency(pd.concat([rows[["ba_code", "eia_local_end", "eia_data_date"]], local], axis=1)))
 
-        grid = pd.DataFrame({"utc_period_end": expected_period_ends(cfg.start_local_date, cfg.end_local_date, tz)})
+        grid = pd.DataFrame({"utc_period_end": expected_period_ends(cfg.start_ref_date, cfg.end_ref_date, tz)})
         grid = grid.merge(rows, on="utc_period_end", how="left", indicator=True)
         grid["source_row_present"] = grid.pop("_merge") == "both"
         grid["ba_code"] = ba
         grid["reference_time_zone"] = tz
-        grid = pd.concat([grid, derive_local_attributes(grid["utc_period_end"], tz)], axis=1)
+        grid = pd.concat([grid, derive_reference_attributes(grid["utc_period_end"], tz)], axis=1)
         frames.append(grid)
 
     hourly = pd.concat(frames, ignore_index=True)
@@ -116,8 +116,8 @@ def coverage_table(hourly: pd.DataFrame, candidates: pd.DataFrame, cfg: Config) 
 
 
 def monthly_coverage(hourly: pd.DataFrame) -> pd.DataFrame:
-    h = hourly.assign(local_month=hourly["local_date"].dt.to_period("M").astype(str))
-    g = h.groupby(["ba_code", "local_month"])
+    h = hourly.assign(ref_month=hourly["ref_date"].dt.to_period("M").astype(str))
+    g = h.groupby(["ba_code", "ref_month"])
     out = pd.DataFrame({
         "expected_hours": g.size(),
         "actual_hours": g["actual_mw"].count(),

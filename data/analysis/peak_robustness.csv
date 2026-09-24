@@ -1,0 +1,9 @@
+ba_code,actual_defined_n_hours,actual_defined_norm_bias_pct,actual_defined_years,forecast_defined_n_hours,forecast_defined_norm_bias_pct,forecast_defined_years,peak_robustness
+AECI,2634,-0.6680386949104568,"-1.94, -0.20, -0.12",2633,-0.14629749690035176,"-0.62, -0.03, +0.12",no consistent peak bias
+BPAT,2631,-0.6446571115388625,"-0.58, -0.43, -0.85",2632,0.21391500025695626,"+0.67, +0.33, -0.08",no consistent peak bias
+ISNE,2631,-0.4272255773515062,"-0.39, -0.34, -0.53",2632,0.016373130173333687,"+0.13, +0.06, -0.11",no consistent peak bias
+PJM,2619,-1.2286602728114522,"-1.04, -1.51, -1.13",2619,0.11324061166070427,"+0.38, -0.33, +0.28",selection-sensitive (underforecast on actual-defined peaks only)
+PNM,2638,-5.364491699075612,"-4.21, -6.20, -5.55",2631,-4.368831112347067,"-2.91, -5.07, -4.99",robust underforecast
+PSCO,2631,-15.994030434364312,"-6.04, -8.07, -28.34",2629,-7.5692120844680435,"-3.60, -6.08, -22.34",robust underforecast
+SOCO,2630,-1.125517695495392,"-0.57, -1.11, -1.59",2632,-1.0656819903784966,"-0.52, -1.01, -1.58",no consistent peak bias
+TVA,2630,1.1926275743941732,"+1.19, +1.09, +1.30",2631,2.1111207901457796,"+1.78, +1.97, +2.47",robust overforecast
