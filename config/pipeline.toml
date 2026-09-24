@@ -38,9 +38,9 @@ MISO = "Etc/GMT+5"
 LGEE = "Etc/GMT+5"
 
 [selection]
-# Chosen after the Phase 0 gate from coverage, reporting stability and
+# Chosen after the coverage gate from coverage, reporting stability and
 # scale/geographic/time-zone diversity only; no error metric was computed
-# before selection. Rationale: reports/phase0_gate.md.
+# before selection. Rationale: reports/ba_selection.md.
 selected_bas = ["PJM", "SOCO", "TVA", "ISNE", "BPAT", "PSCO", "AECI", "PNM"]
 
 [analysis]

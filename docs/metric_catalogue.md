@@ -38,7 +38,7 @@ High-demand hours are hours whose actual demand is at or above the BA's **whole-
 
 - **Why whole-window rather than season-aware:** the operational question is how the forecast performs when load is highest for that system, and those hours genuinely cluster in the BA's peak season. A season-aware decile would label mild-season hours "peak" even when the system is far from its highest load.
 - **Consequence:** high-demand results partly reflect the peak season. The season segmentation is reported separately so the two can be read side by side.
-- **Demand-level bands:** quintiles of actual demand, per BA, over the whole window. Q1 is the lowest 20% and Q5 the highest. Boundaries are BA-relative, with no MW cutoffs. Quintiles were fixed before any result was computed. The reviewer's later suggestion of Low/Medium/High was not adopted after results were seen, because re-banding at that point would be a post-hoc change. Coarser bands can be formed by merging quintiles (e.g. Q1–Q2, Q3, Q4–Q5).
+- **Demand-level bands:** quintiles of actual demand, per BA, over the whole window. Q1 is the lowest 20% and Q5 the highest. Boundaries are BA-relative, with no MW cutoffs. Quintiles were fixed before any result was computed. A Low/Medium/High banding considered later was not adopted, because re-banding after results were seen would be a post-hoc change. Coarser bands can be formed by merging quintiles (e.g. Q1–Q2, Q3, Q4–Q5).
 - **Sensitivity:** the forecast-defined flag uses the top decile of the published forecast.
 
 ### Large-miss threshold: evaluated and omitted
@@ -98,7 +98,7 @@ That is a **28-day window with a 2-day gap**.
 
 ## Project-defined practical-improvement rule and classification
 
-The rule below is a **project-defined practical-improvement rule**, not an industry materiality threshold; I found no authoritative external threshold. Outputs always show the actual relative change and its year/quarter consistency next to the label, so the label is never the only evidence.
+The rule below is a **project-defined practical-improvement rule**, not an industry materiality threshold; no authoritative external threshold was found. Outputs always show the actual relative change and its year/quarter consistency next to the label, so the label is never the only evidence.
 
 | Label (`project_rule_class`) | Rule |
 |---|---|

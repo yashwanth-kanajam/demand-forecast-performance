@@ -65,7 +65,7 @@ def test_segment_rows_cover_every_paired_hour_once_per_segment_type(enriched):
     assert (n == e["is_paired"].sum()).all()
 
 
-# --- Phase 2.5: peak robustness and category logic ---------------------------------
+# --- peak robustness and category logic --------------------------------------------
 
 from dfp.analysis import assign_category, classify_peak  # noqa: E402
 
@@ -92,3 +92,18 @@ def test_peak_robustness_classification(actual, forecast, expected):
 ])
 def test_category_assignment(rule, bias, persistent, flagged, expected):
     assert assign_category(rule, bias, persistent, flagged, 1.0)[0] == expected
+
+
+def test_analysis_runs_for_a_window_other_than_three_years():
+    """Year handling is generic: a 14-month window (two evaluation years) must not fail."""
+    from dfp.analysis import run
+    cfg = replace(load_config(), start_ref_date=date(2024, 1, 1), end_ref_date=date(2025, 3, 1),
+                  selected_bas=["AAA", "BBB"], source_flagged_bas=[])
+    a = make_hourly(cfg.start_ref_date, cfg.end_ref_date, ba="AAA", seed=1)
+    b = make_hourly(cfg.start_ref_date, cfg.end_ref_date, ba="BBB", seed=2)
+    b["forecast_mw"] = b["actual_mw"] + np.random.default_rng(3).normal(0, 30, len(b))   # unbiased noise
+    res = run(pd.concat([a, b], ignore_index=True), cfg)
+    rec = res["ba_reconciliation"].set_index("ba_code")
+    assert set(res["hourly"]["eval_year"]) == {"Y1", "Y2"}
+    assert rec.loc["AAA", "category"].startswith("A")            # constant +20 MW bias, fully correctable
+    assert rec.loc["BBB", "category"].startswith("D")

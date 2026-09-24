@@ -2,8 +2,8 @@
 
 Target environment: Power BI service (web), My workspace, Fabric Free license.
 
-- **Local CSV upload** isn't accepted by the service. Files go through OneDrive for Business and Power Query Online, the route verified in the smoke test.
-- **Excel** is not used; it produced serial dates and unpromoted headers in the smoke test.
+- **Local CSV upload** isn't accepted by the service, so files are read from OneDrive for Business through Power Query Online. That route was tested with synthetic data.
+- **Excel** is not used as the handoff format: in testing it produced serial dates and unpromoted headers.
 
 ## Tables
 

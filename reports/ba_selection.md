@@ -1,4 +1,4 @@
-# Phase 0: Coverage Gate and BA Selection
+# Coverage Gate and BA Selection
 
 Run: 2026-09-24. Source files retrieved 2026-09-24 19:06–19:08 UTC; all were last modified by EIA on 2026-09-24. Full provenance, including SHA-256 hashes, is in `data/curated/run_manifest.json`.
 
@@ -22,7 +22,7 @@ The criteria were applied in this order. **No forecast-error metric had been com
 
 1. **Gate PASS**: 50 BAs.
 2. **Reporting stability**: every one of the 36 reference-time months has ≥ 95% paired coverage, which is the same gate applied at monthly grain. 29 BAs qualify. This excludes ERCO (one month at 90.32%), CISO (4 months), MISO (1 month) and SWPP (2 months).
-3. **Pre-analysis quality-anomaly screen**, applied uniformly to all 29 BAs: exclude a BA if its reported forecast falls outside 0.5–2× its reported actual in more than 5% of hours. At Phase 0 the screen excluded PSEI on this count without a stated cutoff. The 5% rule was formalized after the Phase 0 review, still before any error metric was computed, and it does not change the selection. Applied to all 29 BAs it excludes one: **PSEI**, at 5,001 hours (19.0%). The next highest eligible BA is WALC at 248 hours (0.9%). This is recorded as a *pre-analysis quality anomaly / source-semantic concern requiring confirmation*. It is **not** confirmed bad data. Forecast-vs-actual divergence is partly the outcome this project studies, and PSEI's reported values may be correct. Confirming the cause would need information from EIA or PSEI that the files do not contain.
+3. **Pre-analysis quality-anomaly screen**, applied uniformly to all 29 BAs: exclude a BA if its reported forecast falls outside 0.5–2× its reported actual in more than 5% of hours. The initial screen excluded PSEI on this count without a stated cutoff. The 5% cutoff was formalized afterwards, still before any error metric was computed, and it does not change the selection. Applied to all 29 BAs it excludes one: **PSEI**, at 5,001 hours (19.0%). The next highest eligible BA is WALC at 248 hours (0.9%). This is recorded as a *pre-analysis quality anomaly / source-semantic concern requiring confirmation*. It is **not** confirmed bad data. Forecast-vs-actual divergence is partly the outcome this project studies, and PSEI's reported values may be correct. Confirming the cause would need information from EIA or PSEI that the files do not contain.
 4. **Diversity** among the rest: one BA per EIA region where possible, a spread of time zones including one fixed-offset BA, scale from about 1.6 GW to 92 GW median demand, and a mix of organization types.
 
 | BA | Region | Reference zone | Median demand (MW) | Paired % | Min monthly % | Why |

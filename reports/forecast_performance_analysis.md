@@ -1,4 +1,4 @@
-# Phase 2: Metrics, Benchmarks and Correctability
+# Forecast Performance Analysis: Metrics, Benchmarks and Correctability
 
 Run 2026-09-24 on the source files pinned in `data/curated/run_manifest.json`. Definitions and thresholds are in `docs/metric_catalogue.md` and were fixed before any result was computed.
 
@@ -128,12 +128,12 @@ Evidence strings are in `data/analysis/exception_candidates.csv`.
 - **Large-miss metric** omitted because it is confounded by stable bias (Section 5).
 - **Season:** 3 cycles per season. Season statements are observations, not established regularities.
 
-## Phase 2.5 validation (2026-09-24)
+## Comparison-set, source-semantics and peak robustness checks
 
 1. **Fair comparison set.** Incumbent KPIs use all paired hours (`*_all_paired`). Every published/naive/corrected comparison uses the identical common-set hours (`*_common`); this is tested. The differences between the two populations are at most 0.064 percentage points of WAPE (PSCO: 10.365 vs 10.429).
 2. **Source-semantics audit** (`docs/source_semantics_audit.md`). EIA states that forecasts follow each BA's operating accounting, and that for some BAs "the comparison between actual and forecast demand is not very meaningful". PNM and PSCO are unresolved, retained, and flagged SOURCE-SEMANTIC / FORECAST-LEVEL ANOMALY.
 3. **Peak robustness.** PJM's actual-defined peak underforecast is *selection-sensitive*. Robust patterns: PNM and PSCO (under), TVA (over).
-4. **Terminology.** "Material" has been replaced by the explicitly project-defined practical-improvement rule, shown alongside the actual change and year/quarter consistency.
+4. **Practical-improvement rule.** Improvement labels use a project-defined rule (corrected WAPE at least 5% lower overall and lower in every year), not an industry threshold. The rule is always shown alongside the actual change and year/quarter consistency.
 
 | BA | Published WAPE all paired | Published WAPE common | Naive common | Corrected common | Δ common (pp / relative) | Years / quarters improved | Peak robustness | Category |
 |---|--:|--:|--:|--:|--:|---|---|---|

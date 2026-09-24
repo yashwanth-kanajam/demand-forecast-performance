@@ -90,7 +90,7 @@ Gate: a BA passes only if all three are ≥ 95%. Outputs are `data/curated/ba_co
 | `actual_mw_reported`, `forecast_mw_reported` | float, nullable | as published, for audit |
 | `source_file` | string | originating six-month file |
 
-## Analytical fields (Phase 2)
+## Analytical fields
 
 Added to the same hourly table by `dfp.analysis`. Definitions are in `docs/metric_catalogue.md`. Sign convention: `error_mw = forecast − actual`, positive = overforecast.
 

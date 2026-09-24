@@ -26,9 +26,9 @@ Theme:
 | 1 | Text box: title | 24, 16, 900, 40 | "Demand Forecast Performance & Operational Exceptions" | 20 pt |
 | 2 | Text box: headline | 24, 56, 900, 44 | Annotation P1-A (below) | 11 pt |
 | 3 | Slicer | 960, 16, 296, 84 | `DimBA[category_label]` | Dropdown, multi-select, "All" default |
-| 4 | Card | 24, 112, 236, 88 | `Published WAPE (BA Average)` | Subtitle: "All paired hours · equal weight per BA" |
-| 5 | Card | 272, 112, 236, 88 | `Published \|Normalized Bias\| (BA Average)` | Subtitle: "Mean absolute directional error" |
-| 6 | Card | 520, 112, 236, 88 | `Corrected WAPE (BA Average, Common)` | Subtitle: "Trailing 28-day correction · common hours" |
+| 4 | Card | 24, 112, 236, 88 | `Published WAPE (BA Average)` | Title (dynamic): `KPI Title WAPE`, e.g. "Average WAPE across 8 BAs". Subtitle: "Equal-weighted BA average · not a pooled grid-wide WAPE" |
+| 5 | Card | 272, 112, 236, 88 | `Published \|Normalized Bias\| (BA Average)` | Title (dynamic): `KPI Title Bias`, e.g. "Average absolute normalized bias across 8 BAs" |
+| 6 | Card | 520, 112, 236, 88 | `Corrected WAPE (BA Average, Common)` | Title (dynamic): `KPI Title Corrected`, e.g. "Average corrected WAPE across 8 BAs". Subtitle: "Trailing 28-day correction · common hours" |
 | 7 | Card | 768, 112, 236, 88 | `WAPE Change (pp, BA Average)`; `WAPE Change (Relative, BA Average)` | New card visual with two values, or a multi-row card; label "pp" and "relative" |
 | 8 | Card | 1016, 112, 240, 88 | `Paired Hours`; `BAs In View` | Subtitle: "36 months, hourly, EIA-930" |
 | 9 | Clustered bar chart | 24, 212, 616, 256 | Y: `DimBA[ba_code]`; X: `Published WAPE (Common)`, `Corrected WAPE (Common)`; Tooltips: `WAPE Change Label`, `Quarter Consistency Label`, `Category` | Title: "Published vs bias-corrected WAPE (common comparison hours)". Sort by `Published WAPE (Common)` descending. Data labels on. |
@@ -40,14 +40,14 @@ Default values for cards 4–8 (all 8 BAs; for checking once built):
 
 | Card | Value |
 |---|--:|
-| Published WAPE (BA Average) | 3.83% |
-| Published \|Normalized Bias\| (BA Average) | 2.62% |
-| Corrected WAPE (BA Average, Common) | 2.30% |
+| Average WAPE across 8 BAs | 3.83% |
+| Average absolute normalized bias across 8 BAs | 2.62% |
+| Average corrected WAPE across 8 BAs (common hours) | 2.30% |
 | WAPE Change (pp / relative) | −1.54 pp / −40.1% |
 | Paired Hours | 210,278 |
 | BAs In View | 8 |
 
-These all-BA averages include the two source-flagged BAs. Selecting category **A** in slicer 3 shows the unflagged correctable group.
+These are equal-weighted averages of per-BA values, not pooled grid-wide metrics; a pooled WAPE would be dominated by PJM's volume. They include the two source-flagged BAs. Selecting category **A** in slicer 3 shows the unflagged correctable group.
 
 ---
 
@@ -59,7 +59,7 @@ These all-BA averages include the two source-flagged BAs. Selecting category **A
 |---|---|---|---|---|
 | 1 | Text box: title | 24, 16, 700, 36 | "Error patterns & correctability" | 18 pt |
 | 2 | Slicer | 24, 56, 240, 60 | `DimBA[ba_code]` | Dropdown, **single select**, default ISNE |
-| 3 | Multi-row card | 276, 56, 980, 60 | `Category`, `Source Semantics Flag`, `Peak Robustness`, `DimBA[bias_shape]` | Source flag in amber text |
+| 3 | Multi-row card | 276, 56, 980, 60 | `Category`, `Source Semantics Flag`, `Peak Robustness`, `DimBA[bias_shape]` | Source flag in amber text. `bias_shape` is a descriptive display field only (not a category, exception or finding). |
 | 4 | Line chart | 24, 128, 616, 250 | X: `FactHourlyForecastPerformance[ref_hour]` (continuous 0–23); Y: `Published Normalized Bias (Common)`, `Corrected Normalized Bias (Common)` | Title: "Directional bias by BA reference hour". Subtitle: "Reference/reporting clock · negative = underforecast". Constant line at 0. |
 | 5 | Line chart | 652, 128, 604, 250 | X: `DimDate[season_period]` (categorical, sorted ascending); Y: `Published WAPE (Common)`, `Corrected WAPE (Common)`; Tooltip: `WAPE Change Label` | Title: "Quarterly stability of the correction". Subtitle: "12 quarters · common comparison hours". Markers on. |
 | 6 | Clustered column chart | 24, 390, 400, 250 | Values: `Naive WAPE (Common)`, `Published WAPE (Common)`, `Corrected WAPE (Common)` (no axis field) | Title: "Seasonal naive vs published vs corrected". Data labels on. Colours per theme. |
@@ -97,6 +97,9 @@ The demand-band view (7) is kept because it adds information not visible elsewhe
 > Reference hour = BA reporting clock (PNM reports on fixed MST). Seasonal naive = same reference-clock hour 7 days earlier. Quarter = meteorological season × year. Demand quintiles and peaks use actual demand for retrospective segmentation only.
 
 ## Screenshots and exports to capture once built
+
+Suggested file names; none of these exist yet.
+
 
 - Model view (relationships visible): `docs/evidence/model_diagram.png`
 - Page 1: `docs/evidence/page1_forecast_performance_review.png`

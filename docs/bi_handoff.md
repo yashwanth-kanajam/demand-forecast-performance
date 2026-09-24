@@ -4,7 +4,7 @@ Written by `python -m dfp.pipeline` to `data/bi/`.
 
 - **Format:** UTF-8 CSV, comma-separated, header row, no index column.
 - **Timestamps:** UTC timestamps are ISO 8601 with a `Z` suffix. Reference-clock timestamps are ISO 8601 without an offset. Dates are `YYYY-MM-DD`. Booleans are `true`/`false`.
-- **Why CSV and not Excel:** Excel serial dates and header promotion caused typing problems in the smoke test.
+- **Why CSV and not Excel:** Excel serial dates and header promotion caused typing problems when tested in Power Query Online.
 - **Git:** `fact_hourly_performance.csv` (about 36 MB) is git-ignored and regenerated. The other files are committed.
 
 **Sign conventions:** error = forecast − actual (positive = overforecast). Adjustment = mean residual (actual − forecast), added to the published forecast.
@@ -55,7 +55,10 @@ One row per reference date (1,096 rows). Columns:
 
 ## dim_ba.csv
 
-`ba_code`, `ba_name`, `region_name`, `eia_time_zone_label`, `reference_time_zone`, `median_actual_mw`, `paired_coverage_pct`.
+One row per BA.
+- **Identity:** `ba_code`, `ba_name`, `region_name`, `eia_time_zone_label`, `reference_time_zone`, `median_actual_mw`, `paired_coverage_pct`.
+- **Classification (from the analysis):** `category_code` (A–D), `category_label`, `source_semantic_flag` (true/false), `source_semantics_display` ("SOURCE SEMANTICS UNCERTAIN" or blank), `project_rule_class`, `peak_robustness`, `exception_reasons`.
+- **Descriptive display only:** `bias_shape`, `hourly_bias_min_pct`, `hourly_bias_max_pct`. These are not used for categories, exceptions or conclusions.
 
 ## ba_metric_summary.csv (reconciliation reference)
 

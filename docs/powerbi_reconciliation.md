@@ -3,7 +3,7 @@
 **Status: Power BI values PENDING.** The report has not been assembled: browser automation cannot operate the Power BI web modeling surface, and nothing in this file claims a Power BI result.
 
 What is verified:
-- **Python reference:** `data/bi/ba_metric_summary.csv`, produced by the Phase 2.5 pipeline.
+- **Python reference:** `data/bi/ba_metric_summary.csv`, produced by the pipeline.
 - **DAX-logic replica:** `src/dfp/bi_replica.py`. It recomputes every **[R]** measure in `docs/dax_measures.md` from the handoff CSVs (`data/bi/*.csv`), using the same filters, populations, tie-breaking and quarter iteration as the DAX. This checks the handoff files and the measure logic, not Power BI itself.
 - **Test:** `tests/test_analysis_outputs.py::test_dax_logic_replica_reproduces_reference_values` (tolerance 1e-9 relative). It passed; the largest absolute difference across all measures and BAs was 5.7e-14.
 

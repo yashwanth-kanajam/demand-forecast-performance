@@ -181,7 +181,7 @@ COUNTROWS (
 )
 ```
 
-## 5. Multi-BA display (folder: `4 Portfolio view`)
+## 5. Multi-BA display (folder: `4 Cross-BA view`)
 
 ```dax
 Published WAPE (BA Average) =
@@ -205,6 +205,15 @@ DIVIDE ( [Corrected WAPE (BA Average, Common)], [Published WAPE (BA Average, Com
 
 BAs In View =
 DISTINCTCOUNT ( DimBA[ba_code] )
+
+KPI Title WAPE =
+"Average WAPE across " & [BAs In View] & " BAs"
+
+KPI Title Bias =
+"Average absolute normalized bias across " & [BAs In View] & " BAs"
+
+KPI Title Corrected =
+"Average corrected WAPE across " & [BAs In View] & " BAs"
 ```
 
 ## 6. Labels and flags (folder: `5 Labels`)

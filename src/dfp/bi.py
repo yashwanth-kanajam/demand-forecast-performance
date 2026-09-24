@@ -62,7 +62,8 @@ SOURCE_FLAG_TEXT = "SOURCE SEMANTICS UNCERTAIN"
 def bias_shape(summary_row: pd.Series, hour_bias: pd.Series, exception_codes: set[str]) -> str:
     """Descriptive label for how directional error is distributed across reference hours.
 
-    Rule (descriptive only, added after Phase 2.5 review; not used for categories):
+    Display field only: introduced after the categories were fixed and not used for categories,
+    exceptions or conclusions. Rule:
     HOUR_SPECIFIC_BIAS fired and the range of hourly normalized bias >= 2 x |overall bias|
     -> 'hour-structured'; HOUR_SPECIFIC_BIAS fired otherwise -> 'level offset across hours';
     PERSISTENT_DIRECTIONAL_BIAS only -> 'uniform directional'; else 'near zero'.

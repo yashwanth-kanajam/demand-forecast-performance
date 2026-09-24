@@ -125,7 +125,7 @@ def test_exceptions_state_rule_and_sample_size():
     assert (x["n_hours"] > 0).all() and x["rule"].str.len().gt(0).all()
 
 
-# --- Phase 2.5: fair comparison set ------------------------------------------------
+# --- fair comparison set -----------------------------------------------------------
 
 def test_three_comparison_variants_use_identical_target_hour_keys(h):
     """Published, naive and corrected common-set metrics are computed on exactly the same (BA, UTC) keys."""
@@ -180,7 +180,7 @@ def test_categories_follow_rules(rec):
             assert cat[0] in "CD"
 
 
-# --- Phase 3: DAX-logic replica from BI CSVs ------------------------------------
+# --- DAX-logic replica from BI CSVs ---------------------------------------------
 
 def test_dax_logic_replica_reproduces_reference_values(rec):
     from dfp.bi_replica import RECONCILED, replicate

@@ -1,6 +1,6 @@
 # Source-Semantics Audit: PNM and PSCO
 
-Performed 2026-09-24 (Phase 2.5), before final conclusions. Only official EIA material and EIA-published data were used.
+Performed 2026-09-24, before final conclusions were drawn. Only official EIA material and EIA-published data were used.
 
 ## Authoritative EIA statements
 

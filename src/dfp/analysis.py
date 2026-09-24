@@ -232,17 +232,17 @@ def extreme_concentration_threshold_pct(cfg: Config) -> float:
 
 
 EXCEPTION_RULES = {
-    "PERSISTENT_DIRECTIONAL_BIAS": "|normalized bias| >= {persistent_bias_pct}% (paired set) and same sign in Y1, Y2, Y3",
-    "HOUR_SPECIFIC_BIAS": ">= {hour_bias_min_hours} reference hours with |normalized bias| >= {hour_bias_pct}% and same sign in Y1, Y2, Y3",
-    "HIGH_DEMAND_UNDERFORECAST": "high-demand normalized bias <= -{high_demand_bias_pct}% in Y1, Y2, Y3 on both actual-defined and forecast-defined top-decile hours",
-    "HIGH_DEMAND_OVERFORECAST": "high-demand normalized bias >= +{high_demand_bias_pct}% in Y1, Y2, Y3 on both actual-defined and forecast-defined top-decile hours",
+    "PERSISTENT_DIRECTIONAL_BIAS": "|normalized bias| >= {persistent_bias_pct}% (paired set) and same sign in every evaluation year",
+    "HOUR_SPECIFIC_BIAS": ">= {hour_bias_min_hours} reference hours with |normalized bias| >= {hour_bias_pct}% and same sign in every evaluation year",
+    "HIGH_DEMAND_UNDERFORECAST": "high-demand normalized bias <= -{high_demand_bias_pct}% in every evaluation year on both actual-defined and forecast-defined top-decile hours",
+    "HIGH_DEMAND_OVERFORECAST": "high-demand normalized bias >= +{high_demand_bias_pct}% in every evaluation year on both actual-defined and forecast-defined top-decile hours",
     "EXTREME_HOUR_CONCENTRATION": "worst-1% contribution >= {extreme_concentration_multiple} x Gaussian reference",
-    "SEASON_SPECIFIC_DETERIORATION": "a season's WAPE >= {season_deterioration_ratio} x BA overall WAPE in each of its 3 season-years",
-    "PRACTICAL_GAIN_FROM_CORRECTION": "project-defined practical-improvement rule: common-set WAPE change <= -5% overall and lower in all 3 evaluation years",
-    "CORRECTION_DEGRADES_FORECAST": "project-defined rule: common-set WAPE change >= +5% overall and higher in all 3 evaluation years",
+    "SEASON_SPECIFIC_DETERIORATION": "a season's WAPE >= {season_deterioration_ratio} x BA overall WAPE in every season-year observed (at least 2)",
+    "PRACTICAL_GAIN_FROM_CORRECTION": "project-defined practical-improvement rule: common-set WAPE change <= -5% overall and lower in every evaluation year",
+    "CORRECTION_DEGRADES_FORECAST": "project-defined rule: common-set WAPE change >= +5% overall and higher in every evaluation year",
     "ERROR_NOT_BIAS_CORRECTABLE": "correction below the project rule (|change| < 5%) or degrades, and |normalized bias| < {persistent_bias_pct}%",
     "SOURCE_SEMANTIC_FORECAST_LEVEL_ANOMALY": "flagged by the source-semantics audit (docs/source_semantics_audit.md); correction is real in the reported series but its meaning is undetermined",
-    "WEAK_SKILL_VS_NAIVE": "published forecast does not beat seasonal naive by skill >= 0.20 overall and in all 3 years",
+    "WEAK_SKILL_VS_NAIVE": "published forecast does not beat seasonal naive by skill >= 0.20 overall and in every evaluation year",
 }
 
 
@@ -257,6 +257,7 @@ def exceptions(seg: pd.DataFrame, tails: pd.DataFrame, corr: pd.DataFrame, cross
         out.append({"ba_code": ba, "exception": code, "evidence": evidence, "n_hours": int(n_hours),
                     "rule": EXCEPTION_RULES[code].format(**x)})
 
+    n_years = p[p["segment_type"] == "eval_year"]["segment_value"].nunique()
     for ba in sorted(p["ba_code"].unique()):
         b = p[p["ba_code"] == ba]
         seg_ = lambda t: b[b["segment_type"] == t].set_index("segment_value")
@@ -291,7 +292,7 @@ def exceptions(seg: pd.DataFrame, tails: pd.DataFrame, corr: pd.DataFrame, cross
                 ev.append(f"{col}: " + ", ".join(f"{k} {v:+.2f}%" for k, v in yb.items()))
                 if col == "high_demand":
                     n_hd = ct[(ct["ba_code"] == ba) & (ct["segment"] == "high")]["n_hours"].sum()
-                ok_all &= bool((sign * yb >= x["high_demand_bias_pct"]).all()) and len(yb) == 3
+                ok_all &= bool((sign * yb >= x["high_demand_bias_pct"]).all()) and len(yb) == n_years
             if ok_all:
                 flag(ba, f"HIGH_DEMAND_{kind.upper()}FORECAST", "; ".join(ev), n_hd)
 
@@ -305,14 +306,15 @@ def exceptions(seg: pd.DataFrame, tails: pd.DataFrame, corr: pd.DataFrame, cross
         for season in SEASON_START:
             s = sp[sp.index.str.endswith(season)]
             ratio = s["wape_pct"] / ov["wape_pct"]
-            if len(s) == 3 and (ratio >= x["season_deterioration_ratio"]).all():
+            if len(s) >= 2 and (ratio >= x["season_deterioration_ratio"]).all():
                 flag(ba, "SEASON_SPECIFIC_DETERIORATION",
                      f"{season} WAPE / overall WAPE by season-year: "
                      + ", ".join(f"{i.split(' ')[0]} {r:.2f}x" for i, r in ratio.items()), s["n_hours"].sum())
 
         c = corr[corr["ba_code"] == ba].iloc[0]
+        year_cols = sorted(k for k in c.index if k.startswith("rel_wape_change_Y"))
         rel = f"relative WAPE change {c['rel_wape_change_pct']:+.1f}% (years " + ", ".join(
-            f"{c[f'rel_wape_change_{y}_pct']:+.1f}%" for y in ("Y1", "Y2", "Y3")) + ")"
+            f"{c[k]:+.1f}%" for k in year_cols) + ")"
         n_c = c["common_n_hours"]
         if c["project_rule_class"] == "improvement: project rule met":
             flag(ba, "PRACTICAL_GAIN_FROM_CORRECTION", rel, n_c)
@@ -360,8 +362,9 @@ def peak_robustness(seg: pd.DataFrame, cross: dict, cfg: Config) -> pd.DataFrame
             rec[f"{label}_n_hours"] = int(ov["n_hours"])
             rec[f"{label}_norm_bias_pct"] = ov["norm_bias_pct"]
             rec[f"{label}_years"] = ", ".join(f"{v:+.2f}" for v in yb)
-            met[label] = ("under" if len(yb) == 3 and (yb <= -thr).all()
-                          else "over" if len(yb) == 3 and (yb >= thr).all() else None)
+            n_years = cross[col]["eval_year"].nunique()
+            met[label] = ("under" if len(yb) == n_years and (yb <= -thr).all()
+                          else "over" if len(yb) == n_years and (yb >= thr).all() else None)
         rec["peak_robustness"] = classify_peak(met["actual_defined"], met["forecast_defined"])
         rows.append(rec)
     return pd.DataFrame(rows)
