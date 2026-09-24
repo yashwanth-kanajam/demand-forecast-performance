@@ -178,3 +178,38 @@ def test_categories_follow_rules(rec):
             assert cat.startswith("B") == (ba in cfg.source_flagged_bas) and cat[0] in "AB"
         else:
             assert cat[0] in "CD"
+
+
+# --- Phase 3: DAX-logic replica from BI CSVs ------------------------------------
+
+def test_dax_logic_replica_reproduces_reference_values(rec):
+    from dfp.bi_replica import RECONCILED, replicate
+    rep = replicate()
+    s = pd.read_csv(BI / "ba_metric_summary.csv").set_index("ba_code")
+    for m in RECONCILED:
+        np.testing.assert_allclose(rep[m].loc[s.index].astype(float), s[m].astype(float), rtol=1e-9, atol=1e-9, err_msg=m)
+
+
+def test_dim_ba_labels_and_flags_reconcile_to_summary():
+    cfg = load_config()
+    d = pd.read_csv(BI / "dim_ba.csv", dtype=str, keep_default_na=False).set_index("ba_code")
+    s = pd.read_csv(BI / "ba_metric_summary.csv").set_index("ba_code")
+    assert d.index.is_unique and set(d.index) == set(cfg.selected_bas)
+    assert (d["category_code"] == s.loc[d.index, "category"].str[0]).all()
+    flagged = set(d.index[d["source_semantic_flag"] == "true"])
+    assert flagged == set(cfg.source_flagged_bas) == set(s.index[s["source_semantic_flag"].astype(bool)])
+    assert (d.loc[list(flagged), "source_semantics_display"] == "SOURCE SEMANTICS UNCERTAIN").all()
+    assert (d.loc[d.index.difference(list(flagged)), "source_semantics_display"] == "").all()
+
+
+def test_all_bi_csvs_load_with_unique_keys():
+    f = pd.read_csv(BI / "fact_hourly_performance.csv", usecols=["ba_code", "utc_period_end", "is_paired", "in_common_set",
+                                                                  "actual_mw", "forecast_mw", "naive_forecast_mw",
+                                                                  "corrected_forecast_mw"])
+    assert not f.duplicated(["ba_code", "utc_period_end"]).any()
+    common = f["in_common_set"]
+    assert (f.loc[common, ["actual_mw", "forecast_mw", "naive_forecast_mw", "corrected_forecast_mw"]].notna().all().all())
+    assert (f["is_paired"] | ~common).all()
+    assert pd.read_csv(BI / "dim_date.csv")["date"].is_unique
+    x = pd.read_csv(BI / "exception_candidates.csv")
+    assert not x.duplicated(["ba_code", "exception"]).any()

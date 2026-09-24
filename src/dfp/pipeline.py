@@ -57,7 +57,7 @@ def run(start: date | None = None, end: date | None = None, bas: list[str] | Non
         for name, table in results.items():
             table.to_csv(ANALYSIS_DIR / f"{name}.csv", index=False)
         bi.write(BI_DIR, enriched, coverage, selected, results["ba_reconciliation"],
-                 results["exception_candidates"])
+                 results["exception_candidates"], results["segment_metrics"])
 
     manifest = {
         "run_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),

@@ -23,16 +23,16 @@ Gaussian reference: worst-1% share 3.62%. The large-miss metric was evaluated an
 
 ## 2. Three-way comparison (common set)
 
-| BA | Common N | Seasonal-naive WAPE % | Published WAPE % | Corrected WAPE % | Change vs published | Y1 / Y2 / Y3 change | Quarters improved | Hours improved | Class |
+| BA | Common N | Seasonal-naive WAPE % | Published WAPE % | Corrected WAPE % | Change vs published (pp / relative) | Y1 / Y2 / Y3 change | Quarters improved | Hours improved | Class |
 |---|--:|--:|--:|--:|--:|---|--:|--:|---|
-| AECI | 25,941 | 17.56 | 2.45 | 2.52 | +2.8% | +3.6 / +3.1 / +0.7 | 1/12 | 0/24 | below project rule |
-| BPAT | 25,941 | 6.50 | 1.96 | 1.95 | −0.6% | +0.6 / +0.3 / −2.7 | 7/12 | 14/24 | below project rule |
-| ISNE | 25,937 | 11.08 | 2.49 | 1.79 | −28.0% | −24.4 / −25.6 / −32.8 | 12/12 | 19/24 | improvement: project rule met |
-| PJM | 25,704 | 8.98 | 3.49 | 2.11 | −39.4% | −43.8 / −38.3 / −36.6 | 12/12 | 23/24 | improvement: project rule met |
-| PNM | 25,944 | 6.39 | 6.09 | 2.49 | −59.2% | −54.9 / −65.3 / −55.2 | 12/12 | 24/24 | improvement: project rule met |
-| PSCO | 25,905 | 9.10 | 10.43 | 4.61 | −55.8% | −33.8 / −42.9 / −68.4 | 12/12 | 24/24 | improvement: project rule met |
-| SOCO | 25,932 | 10.74 | 1.46 | 0.66 | −55.2% | −50.5 / −48.6 / −67.8 | 12/12 | 24/24 | improvement: project rule met |
-| TVA | 25,933 | 12.22 | 2.32 | 2.27 | −2.2% | −1.4 / −2.8 / −2.3 | 10/12 | 19/24 | below project rule |
+| AECI | 25,941 | 17.56 | 2.45 | 2.52 | +0.07 pp / +2.8% | +3.6 / +3.1 / +0.7 | 1/12 | 0/24 | below project rule |
+| BPAT | 25,941 | 6.50 | 1.96 | 1.95 | −0.01 pp / −0.6% | +0.6 / +0.3 / −2.7 | 7/12 | 14/24 | below project rule |
+| ISNE | 25,937 | 11.08 | 2.49 | 1.79 | −0.70 pp / −28.0% | −24.4 / −25.6 / −32.8 | 12/12 | 19/24 | improvement: project rule met |
+| PJM | 25,704 | 8.98 | 3.49 | 2.11 | −1.37 pp / −39.4% | −43.8 / −38.3 / −36.6 | 12/12 | 23/24 | improvement: project rule met |
+| PNM | 25,944 | 6.39 | 6.09 | 2.49 | −3.61 pp / −59.2% | −54.9 / −65.3 / −55.2 | 12/12 | 24/24 | improvement: project rule met |
+| PSCO | 25,905 | 9.10 | 10.43 | 4.61 | −5.82 pp / −55.8% | −33.8 / −42.9 / −68.4 | 12/12 | 24/24 | improvement: project rule met |
+| SOCO | 25,932 | 10.74 | 1.46 | 0.66 | −0.81 pp / −55.2% | −50.5 / −48.6 / −67.8 | 12/12 | 24/24 | improvement: project rule met |
+| TVA | 25,933 | 12.22 | 2.32 | 2.27 | −0.05 pp / −2.2% | −1.4 / −2.8 / −2.3 | 10/12 | 19/24 | below project rule |
 
 - On the common set the relative MAE change equals the relative WAPE change by construction.
 - Skill vs naive (1 − published/naive): AECI 0.86, SOCO 0.86, TVA 0.81, ISNE 0.78, BPAT 0.70, PJM 0.61, **PNM 0.05, PSCO −0.15**.
@@ -135,13 +135,13 @@ Evidence strings are in `data/analysis/exception_candidates.csv`.
 3. **Peak robustness.** PJM's actual-defined peak underforecast is *selection-sensitive*. Robust patterns: PNM and PSCO (under), TVA (over).
 4. **Terminology.** "Material" has been replaced by the explicitly project-defined practical-improvement rule, shown alongside the actual change and year/quarter consistency.
 
-| BA | Published WAPE all paired | Published WAPE common | Naive common | Corrected common | Relative Δ (common) | Years / quarters improved | Peak robustness | Category |
+| BA | Published WAPE all paired | Published WAPE common | Naive common | Corrected common | Δ common (pp / relative) | Years / quarters improved | Peak robustness | Category |
 |---|--:|--:|--:|--:|--:|---|---|---|
-| AECI | 2.48 | 2.45 | 17.56 | 2.52 | +2.8% | 0/3, 1/12 | no consistent peak bias | D: little or no correctable bias |
-| BPAT | 1.96 | 1.96 | 6.50 | 1.95 | -0.6% | 1/3, 7/12 | no consistent peak bias | D: little or no correctable bias |
-| ISNE | 2.49 | 2.49 | 11.08 | 1.79 | -28.0% | 3/3, 12/12 | no consistent peak bias | A: systematic and correctable |
-| PJM | 3.49 | 3.49 | 8.98 | 2.11 | -39.4% | 3/3, 12/12 | selection-sensitive (underforecast on actual-defined peaks only) | A: systematic and correctable |
-| PNM | 6.09 | 6.09 | 6.39 | 2.49 | -59.2% | 3/3, 12/12 | robust underforecast | B: apparently correctable, source semantics uncertain |
-| PSCO | 10.36 | 10.43 | 9.10 | 4.61 | -55.8% | 3/3, 12/12 | robust underforecast | B: apparently correctable, source semantics uncertain |
-| SOCO | 1.47 | 1.46 | 10.74 | 0.66 | -55.2% | 3/3, 12/12 | no consistent peak bias | A: systematic and correctable |
-| TVA | 2.32 | 2.32 | 12.22 | 2.27 | -2.2% | 3/3, 10/12 | robust overforecast | C: persistent bias, low practical benefit from correction |
+| AECI | 2.48 | 2.45 | 17.56 | 2.52 | +0.07 pp / +2.8% | 0/3, 1/12 | no consistent peak bias | D: little or no correctable bias |
+| BPAT | 1.96 | 1.96 | 6.50 | 1.95 | -0.01 pp / -0.6% | 1/3, 7/12 | no consistent peak bias | D: little or no correctable bias |
+| ISNE | 2.49 | 2.49 | 11.08 | 1.79 | -0.70 pp / -28.0% | 3/3, 12/12 | no consistent peak bias | A: systematic and correctable |
+| PJM | 3.49 | 3.49 | 8.98 | 2.11 | -1.37 pp / -39.4% | 3/3, 12/12 | selection-sensitive (underforecast on actual-defined peaks only) | A: systematic and correctable |
+| PNM | 6.09 | 6.09 | 6.39 | 2.49 | -3.61 pp / -59.2% | 3/3, 12/12 | robust underforecast | B: apparently correctable, source semantics uncertain |
+| PSCO | 10.36 | 10.43 | 9.10 | 4.61 | -5.82 pp / -55.8% | 3/3, 12/12 | robust underforecast | B: apparently correctable, source semantics uncertain |
+| SOCO | 1.47 | 1.46 | 10.74 | 0.66 | -0.81 pp / -55.2% | 3/3, 12/12 | no consistent peak bias | A: systematic and correctable |
+| TVA | 2.32 | 2.32 | 12.22 | 2.27 | -0.05 pp / -2.2% | 3/3, 10/12 | robust overforecast | C: persistent bias, low practical benefit from correction |
