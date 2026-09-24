@@ -1,0 +1,56 @@
+ba_code,ba_name,eia_time_zone,region_name,expected_hours,source_rows,actual_reported_hours,actual_eia_replaced_hours,actual_nonpositive_hours,actual_hours,forecast_nonpositive_hours,forecast_hours,paired_hours,actual_coverage_pct,forecast_coverage_pct,paired_coverage_pct,passes_gate,min_monthly_paired_pct,months_below_95_paired,months,suspect_ratio_hours,median_actual_mw,local_end_mismatch,local_date_mismatch
+AECI,"Associated Electric Cooperative, Inc.",Central,Midwest,26304,26304,26304,0,0,26304,0,26304,26304,100.0,100.0,100.0,True,100.0,0,36,0,2337.0,0,0
+AVA,Avista Corporation,Pacific,Northwest,26304,26304,26304,10,0,26294,0,26280,26270,99.96,99.91,99.87,True,96.77,0,36,0,1442.0,0,0
+AZPS,Arizona Public Service Company,Arizona,Southwest,26304,26304,26290,4,0,26286,0,26304,26286,99.93,100.0,99.93,True,97.92,0,36,15,3972.0,0,0
+BANC,Balancing Authority of Northern California,Pacific,California,26304,26304,26302,16,0,26286,1,26211,26194,99.93,99.65,99.58,True,93.0,2,36,2,1868.0,0,0
+BHBA,Black Hills Energy,Mountain,Northwest,26304,3672,2184,0,0,2184,0,2184,2160,8.3,8.3,8.21,False,0.0,34,36,0,905.0,0,0
+BPAT,Bonneville Power Administration,Pacific,Northwest,26304,26304,26304,0,0,26304,0,26304,26304,100.0,100.0,100.0,True,100.0,0,36,0,6830.0,0,0
+CHPD,Public Utility District No. 1 of Chelan County,Pacific,Northwest,26304,26304,26303,0,0,26303,0,26304,26303,100.0,100.0,100.0,True,99.87,0,36,2,209.0,0,0
+CISO,California Independent System Operator,Pacific,California,26304,26304,26176,0,0,26176,0,26184,26080,99.51,99.54,99.15,True,89.88,4,36,1,24900.0,0,0
+CPLE,Duke Energy Progress East,Eastern,Carolinas,26304,26304,26279,0,0,26279,480,25799,25799,99.9,98.08,98.08,True,64.29,2,36,7,6685.0,0,0
+CPLW,Duke Energy Progress West,Eastern,Carolinas,26304,26304,26279,0,0,26279,600,25679,25679,99.9,97.62,97.62,True,51.61,2,36,59,519.0,0,0
+DOPD,PUD No. 1 of Douglas County,Pacific,Northwest,26304,26304,26304,0,0,26304,0,26304,26304,100.0,100.0,100.0,True,100.0,0,36,1,268.0,0,0
+DUK,Duke Energy Carolinas,Eastern,Carolinas,26304,26304,26279,0,0,26279,24,26255,26255,99.9,99.81,99.81,True,96.43,0,36,0,11871.0,0,0
+EPE,El Paso Electric Company,Arizona,Southwest,26304,26304,26253,0,0,26253,0,26280,26229,99.81,99.91,99.71,True,93.55,1,36,2,934.0,0,0
+ERCO,"Electric Reliability Council of Texas, Inc.",Central,Texas,26304,26304,26256,0,0,26256,0,26256,26232,99.82,99.82,99.73,True,90.32,1,36,0,52022.0,0,0
+FMPP,Florida Municipal Power Pool,Eastern,Florida,26304,26304,26253,13,8,26232,522,25779,25712,99.73,98.0,97.75,True,66.02,3,36,9,2060.0,0,0
+FPC,"Duke Energy Florida, Inc.",Eastern,Florida,26304,26304,26279,0,0,26279,24,26254,26254,99.9,99.81,99.81,True,96.43,0,36,131,6146.0,0,0
+FPL,Florida Power & Light Co.,Eastern,Florida,26304,26304,26175,6,0,26169,0,26181,26073,99.49,99.53,99.12,True,89.46,1,36,7,15827.0,0,0
+GCPD,"Public Utility District No. 2 of Grant County, Washington",Pacific,Northwest,26304,26304,26302,0,0,26302,0,26264,26264,99.99,99.85,99.85,True,94.89,1,36,0,741.0,0,0
+GVL,Gainesville Regional Utilities,Eastern,Florida,26304,26304,25962,0,0,25962,0,26164,25888,98.7,99.47,98.42,True,86.42,4,36,21,227.0,0,0
+HST,City of Homestead,Eastern,Florida,26304,26304,26301,1,0,26300,0,26231,26227,99.98,99.72,99.71,True,96.43,0,36,1,71.0,0,0
+IID,Imperial Irrigation District,Pacific,California,26304,26304,26160,48,273,25839,77,26011,25644,98.23,98.89,97.49,True,86.55,8,36,20,361.0,0,0
+IPCO,Idaho Power Company,Pacific,Northwest,26304,26304,26304,0,0,26304,0,26304,26304,100.0,100.0,100.0,True,100.0,0,36,0,2039.0,0,0
+ISNE,ISO New England,Eastern,New England,26304,26304,26302,0,0,26302,0,26304,26302,99.99,100.0,99.99,True,99.85,0,36,0,12866.0,0,0
+JEA,JEA,Eastern,Florida,26304,26304,26279,0,0,26279,0,26034,26010,99.9,98.97,98.88,True,62.55,1,36,2,1468.0,0,0
+LDWP,Los Angeles Department of Water and Power,Pacific,California,26304,26304,26255,0,4,26251,0,26154,26126,99.8,99.43,99.32,True,86.55,2,36,214,2666.0,0,0
+LGEE,Louisville Gas and Electric Company and Kentucky Utilities Company,Eastern,Midwest,26304,26304,26304,1,16,26287,0,26304,26287,99.94,100.0,99.94,True,97.85,0,36,0,4148.0,0,0
+MISO,"Midcontinent Independent System Operator, Inc.",Eastern,Midwest,26304,26304,26243,0,0,26243,0,26256,26195,99.77,99.82,99.59,True,93.55,1,36,0,72723.0,0,0
+NEVP,Nevada Power Company,Pacific,Northwest,26304,26304,26304,9,27,26268,0,26304,26268,99.86,100.0,99.86,True,99.44,0,36,125,4195.0,0,0
+NWMT,NorthWestern Corporation,Mountain,Northwest,26304,26304,26304,14,0,26290,0,26304,26290,99.95,100.0,99.95,True,99.6,0,36,5,1329.0,0,0
+NYIS,New York Independent System Operator,Eastern,New York,26304,26304,26304,0,11,26293,115,26189,26178,99.96,99.56,99.52,True,96.64,0,36,0,16766.0,0,0
+PACE,PacifiCorp East,Mountain,Northwest,26304,26304,26304,1,0,26303,23,26209,26208,100.0,99.64,99.64,True,87.23,1,36,1,5876.0,0,0
+PACW,PacifiCorp West,Pacific,Northwest,26304,26304,26304,0,0,26304,0,26304,26304,100.0,100.0,100.0,True,100.0,0,36,1,2341.0,0,0
+PGE,Portland General Electric Company,Pacific,Northwest,26304,26304,26304,0,0,26304,0,26304,26304,100.0,100.0,100.0,True,100.0,0,36,0,2594.0,0,0
+PJM,"PJM Interconnection, LLC",Eastern,Mid-Atlantic,26304,26304,26185,0,0,26185,0,26183,26183,99.55,99.54,99.54,True,96.53,0,36,0,91870.0,0,0
+PNM,Public Service Company of New Mexico,Arizona,Southwest,26304,26304,26304,0,0,26304,0,26304,26304,100.0,100.0,100.0,True,100.0,0,36,0,1627.0,0,0
+PSCO,Public Service Company of Colorado,Mountain,Northwest,26304,26304,26304,15,0,26289,6,26298,26283,99.94,99.98,99.92,True,99.17,0,36,29,5070.0,0,0
+PSEI,"Puget Sound Energy, Inc.",Pacific,Northwest,26304,26304,26304,0,0,26304,0,26304,26304,100.0,100.0,100.0,True,100.0,0,36,5001,2751.0,0,0
+SC,South Carolina Public Service Authority,Eastern,Carolinas,26304,26304,26242,0,0,26242,0,26227,26170,99.76,99.71,99.49,True,93.33,2,36,3,2969.0,0,0
+SCEG,"Dominion Energy South Carolina, Inc.",Eastern,Carolinas,26304,26304,25871,0,0,25871,0,25557,25389,98.35,97.16,96.52,True,70.93,9,36,3,2700.0,0,0
+SCL,Seattle City Light,Pacific,Northwest,26304,26304,26302,2,0,26300,0,26277,26274,99.98,99.9,99.89,True,96.91,0,36,5,1056.0,0,0
+SEC,Seminole Electric Cooperative,Eastern,Florida,26304,26304,26034,146,2,25886,22,26133,25768,98.41,99.35,97.96,True,89.03,4,36,174,218.0,0,0
+SOCO,"Southern Company Services, Inc. - Trans",Central,Southeast,26304,26304,26304,3,0,26301,0,26301,26298,99.99,99.99,99.98,True,99.55,0,36,0,26058.0,0,0
+SPA,Southwestern Power Administration,Central,Central,26304,26304,26304,75,3,26226,1749,24243,24175,99.7,92.16,91.91,False,67.74,14,36,10456,22.0,0,0
+SRP,Salt River Project Agricultural Improvement and Power District,Arizona,Southwest,26304,26304,26253,0,0,26253,0,26256,26205,99.81,99.82,99.62,True,87.1,1,36,20,3589.0,0,0
+SWPP,Southwest Power Pool,Central,Central,26304,26304,26279,0,0,26279,0,25824,25799,99.9,98.18,98.08,True,48.39,2,36,25,32444.0,0,0
+SWPW,Southwest Power Pool West Balancing Authority Area,Central,Northwest,26304,3672,3671,0,0,3671,0,3240,3239,13.96,12.32,12.31,False,0.0,32,36,0,2850.0,0,0
+TAL,City of Tallahassee,Eastern,Florida,26304,26304,26304,0,0,26304,2,26302,26302,100.0,99.99,99.99,True,99.87,0,36,14,308.0,0,0
+TEC,Tampa Electric Company,Eastern,Florida,26304,26304,26295,0,0,26295,0,26302,26294,99.97,99.99,99.96,True,99.06,0,36,16,2399.0,0,0
+TEPC,Tucson Electric Power,Arizona,Southwest,26304,26304,26184,1,0,26183,8,26176,26103,99.54,99.51,99.24,True,86.67,3,36,8,1539.0,0,0
+TIDC,Turlock Irrigation District,Pacific,California,26304,26304,26304,0,51,26253,3,26301,26253,99.81,99.99,99.81,True,96.77,0,36,0,304.0,0,0
+TPWR,"City of Tacoma, Department of Public Utilities, Light Division",Pacific,Northwest,26304,26304,26304,0,0,26304,0,26304,26304,100.0,100.0,100.0,True,100.0,0,36,0,503.0,0,0
+TVA,Tennessee Valley Authority,Central,Tennessee,26304,26304,26304,4,0,26300,0,26304,26300,99.98,100.0,99.98,True,99.73,0,36,0,18136.0,0,0
+WACM,Western Area Power Administration - Rocky Mountain Region,Arizona,Northwest,26304,22632,22488,23,0,22465,40,22448,22377,85.41,85.34,85.07,False,0.0,6,36,19,3791.0,0,0
+WALC,Western Area Power Administration - Desert Southwest Region,Arizona,Southwest,26304,26304,26304,55,0,26249,48,26256,26201,99.79,99.82,99.61,True,95.83,0,36,248,941.0,0,0
+WAUW,Western Area Power Administration - Upper Great Plains West,Mountain,Northwest,26304,22632,22632,0,0,22632,0,22632,22632,86.04,86.04,86.04,False,0.0,5,36,128,89.0,0,0

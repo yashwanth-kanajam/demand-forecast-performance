@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68,<76"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "demand-forecast-performance"
+version = "0.1.0"
+description = "Evaluation of published day-ahead electricity-demand forecasts (EIA-930)"
+requires-python = ">=3.11"
+dependencies = ["pandas>=2.2,<3", "pyarrow>=15", "openpyxl>=3.1"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<9"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

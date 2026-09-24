@@ -1,0 +1,197 @@
+{
+  "run_at_utc": "2026-09-24T19:16:32+00:00",
+  "window_local": {
+    "start": "2023-09-01",
+    "end_exclusive": "2026-09-01"
+  },
+  "gate": {
+    "actual": 0.95,
+    "forecast": 0.95,
+    "paired": 0.95
+  },
+  "source_files": [
+    {
+      "url": "https://www.eia.gov/electricity/gridmonitor/sixMonthFiles/EIA930_BALANCE_2023_Jul_Dec.csv",
+      "file": "EIA930_BALANCE_2023_Jul_Dec.csv",
+      "retrieved_at_utc": "Thu, 24 Sep 2026 19:06:42 GMT",
+      "http_last_modified": "Thu, 24 Sep 2026 14:41:51 GMT",
+      "bytes": 42574041,
+      "sha256": "c719fc1b513eec8982ce209b6e3173fc64b2d0d243f83d3bf0d8d1adf6222de2"
+    },
+    {
+      "url": "https://www.eia.gov/electricity/gridmonitor/sixMonthFiles/EIA930_BALANCE_2024_Jan_Jun.csv",
+      "file": "EIA930_BALANCE_2024_Jan_Jun.csv",
+      "retrieved_at_utc": "Thu, 24 Sep 2026 19:06:42 GMT",
+      "http_last_modified": "Thu, 24 Sep 2026 14:41:57 GMT",
+      "bytes": 41742812,
+      "sha256": "26768c495c3ba987e29d79df2e40d4e741f9dbcff086f53c12ff774465756a10"
+    },
+    {
+      "url": "https://www.eia.gov/electricity/gridmonitor/sixMonthFiles/EIA930_BALANCE_2024_Jul_Dec.csv",
+      "file": "EIA930_BALANCE_2024_Jul_Dec.csv",
+      "retrieved_at_utc": "Thu, 24 Sep 2026 19:06:43 GMT",
+      "http_last_modified": "Thu, 24 Sep 2026 14:42:03 GMT",
+      "bytes": 47928993,
+      "sha256": "a602a8e577cfdd2fa3083413eaa4dd8ba7f0d2b26a2986f8f6d22917465ea49f"
+    },
+    {
+      "url": "https://www.eia.gov/electricity/gridmonitor/sixMonthFiles/EIA930_BALANCE_2025_Jan_Jun.csv",
+      "file": "EIA930_BALANCE_2025_Jan_Jun.csv",
+      "retrieved_at_utc": "Thu, 24 Sep 2026 19:06:42 GMT",
+      "http_last_modified": "Thu, 24 Sep 2026 14:42:10 GMT",
+      "bytes": 47565054,
+      "sha256": "fac4bb991dfa1dab3b4b35300ccab54ac99be13a40ce91954db8ddafb2816242"
+    },
+    {
+      "url": "https://www.eia.gov/electricity/gridmonitor/sixMonthFiles/EIA930_BALANCE_2025_Jul_Dec.csv",
+      "file": "EIA930_BALANCE_2025_Jul_Dec.csv",
+      "retrieved_at_utc": "Thu, 24 Sep 2026 19:06:42 GMT",
+      "http_last_modified": "Thu, 24 Sep 2026 14:42:17 GMT",
+      "bytes": 48256021,
+      "sha256": "1146158b972439db7c7f4cc7d0491e07644ddbf244d03b8ecb44cb2c833d10f1"
+    },
+    {
+      "url": "https://www.eia.gov/electricity/gridmonitor/sixMonthFiles/EIA930_BALANCE_2026_Jan_Jun.csv",
+      "file": "EIA930_BALANCE_2026_Jan_Jun.csv",
+      "retrieved_at_utc": "Thu, 24 Sep 2026 19:06:43 GMT",
+      "http_last_modified": "Thu, 24 Sep 2026 14:42:23 GMT",
+      "bytes": 47107225,
+      "sha256": "1b3eaf7b0af08393f4d1593125b0c0f502f93e036d961b7dd6d50fc8e618582f"
+    },
+    {
+      "url": "https://www.eia.gov/electricity/gridmonitor/sixMonthFiles/EIA930_BALANCE_2026_Jul_Dec.csv",
+      "file": "EIA930_BALANCE_2026_Jul_Dec.csv",
+      "retrieved_at_utc": "Thu, 24 Sep 2026 19:06:42 GMT",
+      "http_last_modified": "Thu, 24 Sep 2026 14:42:28 GMT",
+      "bytes": 22495925,
+      "sha256": "bd3af605478bd464b8b666c4ac471c04fb49acab7a258b0eaee18a53ad096a90"
+    },
+    {
+      "url": "https://www.eia.gov/electricity/930-content/EIA930_Reference_Tables.xlsx",
+      "file": "EIA930_Reference_Tables.xlsx",
+      "retrieved_at_utc": "Thu, 24 Sep 2026 19:08:03 GMT",
+      "http_last_modified": "Thu, 24 Sep 2026 16:32:10 GMT",
+      "bytes": 45203,
+      "sha256": "a88d3f32aea24744ebe0bb9ecc577444baa455dc7d340280305cbe6a3e402418"
+    }
+  ],
+  "counts": {
+    "raw_rows_all_bas": 1724616,
+    "raw_rows_candidate_bas": 1503504,
+    "duplicates": {
+      "duplicate_rows": 0,
+      "rows_dropped": 0,
+      "conflicting_keys": 0
+    },
+    "rows_in_window_from_source": 1394112,
+    "candidate_bas": 55,
+    "excluded_bas": [
+      {
+        "ba_code": "AVRN",
+        "exclusion_reason": "generation-only BA (no demand)"
+      },
+      {
+        "ba_code": "DEAA",
+        "exclusion_reason": "generation-only BA (no demand)"
+      },
+      {
+        "ba_code": "GRID",
+        "exclusion_reason": "generation-only BA (no demand)"
+      },
+      {
+        "ba_code": "GRIF",
+        "exclusion_reason": "generation-only BA (no demand)"
+      },
+      {
+        "ba_code": "GWA",
+        "exclusion_reason": "generation-only BA (no demand)"
+      },
+      {
+        "ba_code": "HGMA",
+        "exclusion_reason": "generation-only BA (no demand)"
+      },
+      {
+        "ba_code": "SEPA",
+        "exclusion_reason": "generation-only BA (no demand)"
+      },
+      {
+        "ba_code": "SIKE",
+        "exclusion_reason": "generation-only BA (no demand)"
+      },
+      {
+        "ba_code": "WWA",
+        "exclusion_reason": "generation-only BA (no demand)"
+      },
+      {
+        "ba_code": "YAD",
+        "exclusion_reason": "generation-only BA (no demand)"
+      }
+    ],
+    "bas_passing_gate": [
+      "AECI",
+      "AVA",
+      "AZPS",
+      "BANC",
+      "BPAT",
+      "CHPD",
+      "CISO",
+      "CPLE",
+      "CPLW",
+      "DOPD",
+      "DUK",
+      "EPE",
+      "ERCO",
+      "FMPP",
+      "FPC",
+      "FPL",
+      "GCPD",
+      "GVL",
+      "HST",
+      "IID",
+      "IPCO",
+      "ISNE",
+      "JEA",
+      "LDWP",
+      "LGEE",
+      "MISO",
+      "NEVP",
+      "NWMT",
+      "NYIS",
+      "PACE",
+      "PACW",
+      "PGE",
+      "PJM",
+      "PNM",
+      "PSCO",
+      "PSEI",
+      "SC",
+      "SCEG",
+      "SCL",
+      "SEC",
+      "SOCO",
+      "SRP",
+      "SWPP",
+      "TAL",
+      "TEC",
+      "TEPC",
+      "TIDC",
+      "TPWR",
+      "TVA",
+      "WALC"
+    ],
+    "missing_actual_hours_all_candidates": 57326,
+    "missing_forecast_hours_all_candidates": 62046,
+    "timezone_mismatch_rows": 0
+  },
+  "selected_bas": [
+    "PJM",
+    "SOCO",
+    "TVA",
+    "ISNE",
+    "BPAT",
+    "PSCO",
+    "AECI",
+    "PNM"
+  ],
+  "curated_rows": 210432
+}

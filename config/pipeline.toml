@@ -1,0 +1,44 @@
+# Pipeline configuration. Every run records the values it used in
+# data/curated/run_manifest.json.
+
+[source]
+publisher = "U.S. Energy Information Administration"
+form = "EIA-930 Hourly Electric Grid Monitor"
+# Six-month BALANCE files: one row per BA per local hour, hour-ending timestamps.
+balance_file_url = "https://www.eia.gov/electricity/gridmonitor/sixMonthFiles/EIA930_BALANCE_{year}_{half}.csv"
+reference_table_url = "https://www.eia.gov/electricity/930-content/EIA930_Reference_Tables.xlsx"
+raw_dir = "data/raw"
+
+[window]
+# Evaluation window in each BA's reference local calendar: [start, end).
+# Converted to UTC per BA; expected hours are counted on the UTC sequence.
+start_local_date = "2023-09-01"
+end_local_date = "2026-09-01"
+
+[gate]
+min_actual_coverage = 0.95
+min_forecast_coverage = 0.95
+min_paired_coverage = 0.95
+
+[timezones]
+# EIA reference-table "Time Zone" label -> IANA zone. Verified against every
+# source row's local timestamp during validation (see docs/data_contract.md).
+Eastern = "America/New_York"
+Central = "America/Chicago"
+Mountain = "America/Denver"
+Pacific = "America/Los_Angeles"
+Arizona = "America/Phoenix"
+
+[timezone_overrides]
+# BAs whose EIA local timestamps do not follow their reference-table label.
+# MISO and LGEE are labelled "Eastern" but every source row is at fixed UTC-5
+# (EST, no DST), matching MISO's market-time convention. Etc/GMT+5 is UTC-5
+# (POSIX sign inversion).
+MISO = "Etc/GMT+5"
+LGEE = "Etc/GMT+5"
+
+[selection]
+# Chosen after the Phase 0 gate from coverage, reporting stability and
+# scale/geographic/time-zone diversity only; no error metric was computed
+# before selection. Rationale: reports/phase0_gate.md.
+selected_bas = ["PJM", "SOCO", "TVA", "ISNE", "BPAT", "PSCO", "AECI", "PNM"]
