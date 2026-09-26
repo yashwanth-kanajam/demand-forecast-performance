@@ -115,14 +115,25 @@ EIA notes that forecasts follow each BA's operating accounting and that for some
 
 ## Power BI reporting layer
 
-A Power BI reporting layer was designed and made implementation-ready. It includes:
-- the semantic model and typed Power Query import ([docs/semantic_model.md](docs/semantic_model.md));
-- the DAX measure catalogue ([docs/dax_measures.md](docs/dax_measures.md));
-- a two-page report specification ([docs/report_spec.md](docs/report_spec.md));
-- BI-ready extracts ([docs/bi_handoff.md](docs/bi_handoff.md));
-- Python-side reconciliation references ([docs/powerbi_reconciliation.md](docs/powerbi_reconciliation.md)).
+A two-page Power BI report was built in the Power BI Service on a semantic model with two star-schema relationships and the full DAX measure catalogue:
+- **Forecast Performance Review:** equal-weighted BA KPI cards, published vs bias-corrected WAPE on common comparison hours, directional bias by BA, and an operating attention list that flags PNM and PSCO as SOURCE SEMANTICS UNCERTAIN.
+- **Error Patterns & Correctability:** single-BA view of bias by reference hour, quarterly stability of the correction, seasonal naive vs published vs corrected, and bias by demand quintile.
 
-Power BI Service model editing was verified as available in the target account. Final report assembly and in-service DAX reconciliation remain pending, because the browser automation environment could not interact with the modelling iframe. A Python replica of every reconciled DAX measure, computed from the BI extracts, matches the reference values to floating-point precision.
+![Forecast Performance Review](docs/evidence/page1_forecast_performance_review.png)
+
+![Error Patterns & Correctability, ISNE](docs/evidence/page2_error_patterns_ISNE.png)
+
+**Reconciliation.** The service's DAX engine was checked against the Python pipeline. Every reconciled measure matches for all 8 BAs (largest difference 4.9e-07), and the rendered report values match those results ([docs/powerbi_reconciliation.md](docs/powerbi_reconciliation.md)).
+
+**Documentation.**
+- Model: [docs/semantic_model.md](docs/semantic_model.md), with a diagram at [docs/evidence/model_diagram.png](docs/evidence/model_diagram.png).
+- Measures: [docs/dax_measures.md](docs/dax_measures.md).
+- Report specification and as-built notes: [docs/report_spec.md](docs/report_spec.md).
+- Extracts: [docs/bi_handoff.md](docs/bi_handoff.md).
+
+A PDF export of both pages is at [reports/demand_forecast_performance.pdf](reports/demand_forecast_performance.pdf).
+
+The .pbix file is not included because its embedded data source points to private storage. The DAX catalogue, model documentation and screenshots stand in for it.
 
 ## Reproducibility and refresh
 
@@ -144,7 +155,8 @@ data/curated/            coverage tables and run manifest (hourly fact regenerat
 data/analysis/           segment metrics, correctability, stability, exceptions, reconciliation reference
 data/bi/                 Power BI extracts (hourly fact regenerated, not committed)
 docs/                    data contract, metric catalogue, source audit, workflow, Power BI model/DAX/report spec
-reports/                 BA selection, full analysis, executive brief, figure
+docs/evidence/           Power BI model and report page screenshots
+reports/                 BA selection, full analysis, executive brief, figure, Power BI PDF export
 ```
 
 ## Limitations

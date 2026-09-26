@@ -167,7 +167,7 @@ Quarters Improved =                                        -- [R]  format 0
 -- 12 season-quarters; common-set corrected WAPE below published WAPE
 COUNTROWS (
     FILTER ( VALUES ( DimDate[season_period] ), [Corrected WAPE (Common)] < [Published WAPE (Common)] )
-)
+) + 0                                                      -- + 0: show 0, not BLANK, when no quarter improved
 
 Quarters Evaluated =
 COUNTROWS ( FILTER ( VALUES ( DimDate[season_period] ), NOT ISBLANK ( [Published WAPE (Common)] ) ) )
@@ -178,7 +178,7 @@ Quarter Consistency Label =
 Years Improved =                                           -- [R]  format 0
 COUNTROWS (
     FILTER ( VALUES ( DimDate[eval_year] ), [Corrected WAPE (Common)] < [Published WAPE (Common)] )
-)
+) + 0
 ```
 
 ## 5. Multi-BA display (folder: `4 Cross-BA view`)

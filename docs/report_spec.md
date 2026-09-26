@@ -36,7 +36,7 @@ Theme:
 | 11 | Table: attention list | 24, 480, 1232, 200 | `DimBA[ba_code]`, `Category`, `Source Semantics Flag`, `Published WAPE (All Paired)`, `Published Normalized Bias (All Paired)`, `Corrected WAPE (Common)`, `WAPE Change (pp)`, `WAPE Change (Relative)`, `Quarter Consistency Label`, `Exception Reasons` | Title: "Operating attention list". Sort by `DimBA[category_code]`, then `WAPE Change (pp)`. `Source Semantics Flag`: background `#FEF3C7` when not blank. Word-wrap `Exception Reasons`. Totals off. |
 | 12 | Text box: footer | 24, 684, 1232, 28 | Annotation P1-B | 8 pt, grey |
 
-Default values for cards 4–8 (all 8 BAs; for checking once built):
+Default values for cards 4–8 (all 8 BAs; confirmed in the built report):
 
 | Card | Value |
 |---|--:|
@@ -96,12 +96,40 @@ The demand-band view (7) is kept because it adds information not visible elsewhe
 **P2-B (footer):**
 > Reference hour = BA reporting clock (PNM reports on fixed MST). Seasonal naive = same reference-clock hour 7 days earlier. Quarter = meteorological season × year. Demand quintiles and peaks use actual demand for retrospective segmentation only.
 
-## Screenshots and exports to capture once built
+## As built (Power BI Service, 2026-09-26)
 
-Suggested file names; none of these exist yet.
+Both pages were built in the Power BI Service report editor on the reconciled model. Value checks are in `docs/powerbi_reconciliation.md` ("Report page check"). The build differs from the specification above as follows. None of these changes alter a measure or an analytical definition.
 
+**Whole report**
+- The canvas is 1920 × 1080, so positions above were scaled by 1.5.
+- The default Power BI theme is used. The theme colours above were not applied.
+- Model option Auto date/time was left on. Its hidden date tables are not used by any measure.
 
-- Model view (relationships visible): `docs/evidence/model_diagram.png`
-- Page 1: `docs/evidence/page1_forecast_performance_review.png`
-- Page 2 with ISNE selected: `docs/evidence/page2_error_patterns_ISNE.png`
-- PDF export, if the service offers it: `reports/demand_forecast_performance.pdf`
+**Page 1**
+- The title text box reads "Forecast Performance Review" with a one-line subtitle. Headline annotation P1-A is not on the page.
+- Cards use static titles ("Average published WAPE across BAs", and so on) instead of the dynamic `KPI Title …` measures.
+- Card 7 is two cards (pp and relative), and card 8 is two cards (Paired hours in view, BAs in view).
+- The Paired Hours card shows 210K because the card's display units could not be changed in the web editor. The exact value, 210,278, is confirmed in DAX.
+- The WAPE bar chart has no data labels. Values are in the tooltip and the attention table.
+- The bias bar chart uses one neutral colour, not `Bias Direction Color`. It has no separate constant line; the 0% gridline marks zero.
+- The attention table sorts by `ba_code`. `Source Semantics Flag` shows its text without the amber background. `Exception Reasons` is truncated with horizontal scroll instead of wrapped.
+
+**Page 2**
+- The BA slicer is a single-select vertical list, not a dropdown. The default is ISNE.
+- The status area (visual 3) is a one-row table instead of a multi-row card. The source flag is plain text.
+- The hour and quarterly line charts have no separate constant line or markers.
+- The Source Semantics Note (visual 9) is a one-column table so the text wraps. It is blank for unflagged BAs.
+- The callout adds the TVA sentence from P1-A and a peak-robustness sentence. The footer adds that bias shape is a descriptive label.
+
+**Evidence captured**
+
+Screenshots are cropped to the report canvas, with no account, workspace or browser details:
+- `docs/evidence/model_diagram.png`: model view with the two relationships; BAMetricSummary is disconnected.
+- `docs/evidence/page1_forecast_performance_review.png`: category slicer = All.
+- `docs/evidence/page2_error_patterns_ISNE.png`: default BA.
+- `docs/evidence/page2_error_patterns_PNM.png`: a source-flagged BA, showing the warning and note.
+- `reports/demand_forecast_performance.pdf`: the service's PDF export of both pages (current values = defaults).
+
+**Not committed**
+- **PBIX:** the service offers "Download this file" (report and data). The downloaded file's `Connections` part contains the workspace identifier, and its compressed data model embeds the Power Query source. The source points to a private cloud-storage location that cannot be inspected or redacted here.
+- **TMDL:** TMDL View (Preview) is available in the web modelling view and was used for the `+ 0` fix. No TMDL export-to-file control was found. The measure definitions are kept in `docs/dax_measures.md` instead.
