@@ -96,7 +96,7 @@ The demand-band view (7) is kept because it adds information not visible elsewhe
 **P2-B (footer):**
 > Reference hour = BA reporting clock (PNM reports on fixed MST). Seasonal naive = same reference-clock hour 7 days earlier. Quarter = meteorological season × year. Demand quintiles and peaks use actual demand for retrospective segmentation only.
 
-## As built (Power BI Service, 2026-09-26)
+## As built (Power BI Service, 2026-09-26; presentation pass 2026-09-28)
 
 Both pages were built in the Power BI Service report editor on the reconciled model. Value checks are in `docs/powerbi_reconciliation.md` ("Report page check"). The build differs from the specification above as follows. None of these changes alter a measure or an analytical definition.
 
@@ -105,14 +105,14 @@ Both pages were built in the Power BI Service report editor on the reconciled mo
 - The default Power BI theme is used. The theme colours above were not applied.
 - Model option Auto date/time was left on. Its hidden date tables are not used by any measure.
 
-**Page 1**
-- The title text box reads "Forecast Performance Review" with a one-line subtitle. Headline annotation P1-A is not on the page.
-- Cards use static titles ("Average published WAPE across BAs", and so on) instead of the dynamic `KPI Title …` measures.
-- Card 7 is two cards (pp and relative), and card 8 is two cards (Paired hours in view, BAs in view).
-- The Paired Hours card shows 210K because the card's display units could not be changed in the web editor. The exact value, 210,278, is confirmed in DAX.
-- The WAPE bar chart has no data labels. Values are in the tooltip and the attention table.
-- The bias bar chart uses one neutral colour, not `Bias Direction Color`. It has no separate constant line; the 0% gridline marks zero.
-- The attention table sorts by `ba_code`. `Source Semantics Flag` shows its text without the amber background. `Exception Reasons` is truncated with horizontal scroll instead of wrapped.
+**Page 1** (revised 2026-09-28)
+- The title text box reads "Forecast Performance Review" with a one-line subtitle. Below it, a 12 pt headline states: "Forecast error is not equally correctable across systems: ISNE, PJM and SOCO show persistent bias that simple causal correction reduces consistently, while AECI and BPAT gain little or nothing from the same adjustment." PNM and PSCO are deliberately not in the headline.
+- Cards use static titles instead of the dynamic `KPI Title …` measures.
+- Card 7 is two cards: "Change in average WAPE (pp)" and "Change in average WAPE (relative)". The relative card is average corrected WAPE ÷ average published WAPE − 1 on common hours. It is not the mean of each BA's relative change, and its subtitle says so.
+- Card 8 is two cards (Paired hours in view, BAs in view). The Paired Hours card shows 210K because the card's display units could not be changed in the web editor. The exact value, 210,278, is confirmed in DAX.
+- The WAPE bar chart has no data labels. When enabled, the published and corrected labels collided for AECI, TVA and BPAT, where the two values are close. Values are in the tooltip and the attention table. The series key is in the subtitle (light blue = published, dark blue = bias-corrected) instead of a legend, so all eight BAs fit without scrolling.
+- The bias bar chart uses one neutral colour, not `Bias Direction Color`, and has a dashed constant line at 0 on the value axis.
+- The attention table sorts by `ba_code`. Text wraps in every column, and column widths are set so all ten columns and all eight rows are visible without scrolling or hover. `Source Semantics Flag` shows SOURCE SEMANTICS UNCERTAIN for PNM and PSCO as plain text, without the amber background.
 
 **Page 2**
 - The BA slicer is a single-select vertical list, not a dropdown. The default is ISNE.
@@ -124,7 +124,7 @@ Both pages were built in the Power BI Service report editor on the reconciled mo
 **Evidence captured**
 
 Screenshots are cropped to the report canvas, with no account, workspace or browser details:
-- `docs/evidence/model_diagram.png`: model view with the two relationships; BAMetricSummary is disconnected.
+- `docs/evidence/model_diagram.png`: model view with the two relationships; BAMetricSummary is disconnected. Captured 2026-09-26; the model has not changed since.
 - `docs/evidence/page1_forecast_performance_review.png`: category slicer = All.
 - `docs/evidence/page2_error_patterns_ISNE.png`: default BA.
 - `docs/evidence/page2_error_patterns_PNM.png`: a source-flagged BA, showing the warning and note.

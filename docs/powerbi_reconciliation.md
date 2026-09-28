@@ -217,7 +217,7 @@ Units: WAPE, bias and change values are in percent (the DAX returns fractions fo
 | Quarters Improved | 10 | 10 | 0.0e+00 | 10 | 0 | replica PASS; PBI PASS |
 | Years Improved | 3 | 3 | 0.0e+00 | 3 | 0 | replica PASS; PBI PASS |
 
-## Report page check (2026-09-26)
+## Report page check (2026-09-26, re-checked 2026-09-28)
 
 The report "Demand Forecast Performance Review" was built in the Power BI Service on this model, with two pages. Values were read off the rendered visuals and compared with the tables above. No DAX was changed for the report.
 
@@ -230,3 +230,5 @@ The report "Demand Forecast Performance Review" was built in the Power BI Servic
 | Page 2, ISNE | naive 11.08% · published 2.49% · corrected 1.79%; Q1 bias −4.02% | ISNE table above | match |
 | Page 2, PNM | naive 6.39% · published 6.09% · corrected 2.49%; status and note show the source-semantics warning | PNM table above | match |
 | AECI `Years Improved` | not placed on a page; 0 in DAX query view after the `+ 0` fix | 0 | match |
+
+After the 2026-09-28 presentation changes (headline, zero line, card titles, table layout), the Page 1 cards still show 3.83% · 2.62% · 2.30% · −1.54 pp · −40.1% · 210K · 8. The attention table still shows the per-BA values above, and Page 2 for ISNE still shows 11.08% · 2.49% · 1.79%. No measure was changed.
