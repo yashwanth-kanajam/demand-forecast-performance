@@ -96,7 +96,7 @@ The demand-band view (7) is kept because it adds information not visible elsewhe
 **P2-B (footer):**
 > Reference hour = BA reporting clock (PNM reports on fixed MST). Seasonal naive = same reference-clock hour 7 days earlier. Quarter = meteorological season × year. Demand quintiles and peaks use actual demand for retrospective segmentation only.
 
-## As built (Power BI Service, 2026-09-26; presentation pass 2026-09-28)
+## As built (Power BI Service, 2026-09-26; presentation passes 2026-09-28)
 
 Both pages were built in the Power BI Service report editor on the reconciled model. Value checks are in `docs/powerbi_reconciliation.md` ("Report page check"). The build differs from the specification above as follows. None of these changes alter a measure or an analytical definition.
 
@@ -107,7 +107,8 @@ Both pages were built in the Power BI Service report editor on the reconciled mo
 
 **Page 1** (revised 2026-09-28)
 - The title text box reads "Forecast Performance Review" with a one-line subtitle. Below it, a 12 pt headline states: "Forecast error is not equally correctable across systems: ISNE, PJM and SOCO show persistent bias that simple causal correction reduces consistently, while AECI and BPAT gain little or nothing from the same adjustment." PNM and PSCO are deliberately not in the headline.
-- Cards use static titles instead of the dynamic `KPI Title …` measures.
+- The category slicer header reads "Forecast category" (the field is still `DimBA[category_label]`).
+- Cards use static titles instead of the dynamic `KPI Title …` measures. Card subtitles are short enough to show without truncation: "Equal-weight BA average", "Equal-weight avg · absolute bias", "Equal-weight avg · common hours", "Avg corrected − avg published", "Avg corrected ÷ avg published − 1", "36 months · hourly · EIA-930" and "Current filter selection".
 - Card 7 is two cards: "Change in average WAPE (pp)" and "Change in average WAPE (relative)". The relative card is average corrected WAPE ÷ average published WAPE − 1 on common hours. It is not the mean of each BA's relative change, and its subtitle says so.
 - Card 8 is two cards (Paired hours in view, BAs in view). The Paired Hours card shows 210K because the card's display units could not be changed in the web editor. The exact value, 210,278, is confirmed in DAX.
 - The WAPE bar chart has no data labels. When enabled, the published and corrected labels collided for AECI, TVA and BPAT, where the two values are close. Values are in the tooltip and the attention table. The series key is in the subtitle (light blue = published, dark blue = bias-corrected) instead of a legend, so all eight BAs fit without scrolling.
@@ -115,16 +116,17 @@ Both pages were built in the Power BI Service report editor on the reconciled mo
 - The attention table sorts by `ba_code`. Text wraps in every column, and column widths are set so all ten columns and all eight rows are visible without scrolling or hover. `Source Semantics Flag` shows SOURCE SEMANTICS UNCERTAIN for PNM and PSCO as plain text, without the amber background.
 
 **Page 2**
-- The BA slicer is a single-select vertical list, not a dropdown. The default is ISNE.
+- The BA slicer is a single-select vertical list, not a dropdown, with the header "Balancing authority" (field `DimBA[ba_code]`). The default is ISNE.
+- Series colours are consistent across the page: published = light blue (#118DFF), corrected = dark blue (#12239E), seasonal naive = neutral gray (#B3B3B3). The same published/corrected pair is used in the Page 1 WAPE chart.
 - The status area (visual 3) is a one-row table instead of a multi-row card. The source flag is plain text.
 - The hour and quarterly line charts have no separate constant line or markers.
-- The Source Semantics Note (visual 9) is a one-column table so the text wraps. It is blank for unflagged BAs.
+- The Source Semantics Note (visual 9) is a one-column table so the text wraps. It uses the display-only measure `Source Semantics Note Display` (column renamed "Source Semantics Note" for this visual). Unflagged BAs show "No source-semantics exception flagged."; PNM and PSCO show "SOURCE SEMANTICS UNCERTAIN." followed by the full caution text.
 - The callout adds the TVA sentence from P1-A and a peak-robustness sentence. The footer adds that bias shape is a descriptive label.
 
 **Evidence captured**
 
 Screenshots are cropped to the report canvas, with no account, workspace or browser details:
-- `docs/evidence/model_diagram.png`: model view with the two relationships; BAMetricSummary is disconnected. Captured 2026-09-26; the model has not changed since.
+- `docs/evidence/model_diagram.png`: model view with the two relationships; BAMetricSummary is disconnected. Captured 2026-09-26. Tables and relationships have not changed since; the only model change is the display-only measure `Source Semantics Note Display` (2026-09-28).
 - `docs/evidence/page1_forecast_performance_review.png`: category slicer = All.
 - `docs/evidence/page2_error_patterns_ISNE.png`: default BA.
 - `docs/evidence/page2_error_patterns_PNM.png`: a source-flagged BA, showing the warning and note.

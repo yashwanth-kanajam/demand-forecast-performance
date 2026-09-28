@@ -238,6 +238,16 @@ IF (
     "The reported forecast series shows a persistent level offset, but available EIA metadata does not resolve whether this reflects forecast-process bias, reporting-scope differences, resubmission behavior, or another source-definition effect."
 )
 
+Source Semantics Note Display =
+-- display-only wrapper for the Page 2 note table; flag logic and caution text come from [Source Semantics Note]
+VAR _note = [Source Semantics Note]
+RETURN
+    IF (
+        ISBLANK ( _note ),
+        "No source-semantics exception flagged.",
+        "SOURCE SEMANTICS UNCERTAIN. " & _note
+    )
+
 Bias Direction Color =
 -- conditional-format helper: negative bias (underforecast) vs positive (overforecast)
 IF ( [Published Normalized Bias (All Paired)] < 0, "#B45309", "#1D4ED8" )
@@ -247,4 +257,5 @@ IF ( [Published Normalized Bias (All Paired)] < 0, "#B45309", "#1D4ED8" )
 
 - `Quarters Improved` iterates `DimDate[season_period]`. It must be evaluated in a single-BA context, and DimDate must not be filtered by a date slicer.
 - `Worst 1% Error Contribution` uses `TOPN` with a second sort key (`utc_period_end`), so exactly *k* rows are returned; the key is unique per BA.
+- `Source Semantics Note Display` was added on 2026-09-28 for presentation only. It changes no flag, category or metric: it replaces the blank note for unflagged BAs with "No source-semantics exception flagged." and prefixes the unchanged caution with "SOURCE SEMANTICS UNCERTAIN." for PNM and PSCO. In the service it sits at the table root of `FactHourlyForecastPerformance`, not in the `5 Labels` folder.
 - None of these measures is a forecast. The seasonal-naive and corrected values are precomputed benchmark columns (`docs/metric_catalogue.md`).

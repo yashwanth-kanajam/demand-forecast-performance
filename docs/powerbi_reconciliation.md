@@ -217,9 +217,9 @@ Units: WAPE, bias and change values are in percent (the DAX returns fractions fo
 | Quarters Improved | 10 | 10 | 0.0e+00 | 10 | 0 | replica PASS; PBI PASS |
 | Years Improved | 3 | 3 | 0.0e+00 | 3 | 0 | replica PASS; PBI PASS |
 
-## Report page check (2026-09-26, re-checked 2026-09-28)
+## Report page check (2026-09-26, re-checked twice on 2026-09-28)
 
-The report "Demand Forecast Performance Review" was built in the Power BI Service on this model, with two pages. Values were read off the rendered visuals and compared with the tables above. No DAX was changed for the report.
+The report "Demand Forecast Performance Review" was built in the Power BI Service on this model, with two pages. Values were read off the rendered visuals and compared with the tables above. No DAX was changed for the report build; one display-only measure was added later (see the end of this section).
 
 | Check | Rendered value | Expected | Result |
 |---|---|---|---|
@@ -232,3 +232,12 @@ The report "Demand Forecast Performance Review" was built in the Power BI Servic
 | AECI `Years Improved` | not placed on a page; 0 in DAX query view after the `+ 0` fix | 0 | match |
 
 After the 2026-09-28 presentation changes (headline, zero line, card titles, table layout), the Page 1 cards still show 3.83% · 2.62% · 2.30% · −1.54 pp · −40.1% · 210K · 8. The attention table still shows the per-BA values above, and Page 2 for ISNE still shows 11.08% · 2.49% · 1.79%. No measure was changed.
+
+A second presentation pass on 2026-09-28 changed slicer headers, card subtitles and series colours, and added one display-only measure, `Source Semantics Note Display`, which wraps the existing `Source Semantics Note` (see `docs/dax_measures.md`). No reconciled measure was changed. Re-check after that pass:
+
+| Check | Rendered value | Result |
+|---|---|---|
+| Page 1 cards, category = All | 3.83% · 2.62% · 2.30% · −1.54 pp · −40.1% · 210K · 8 | match |
+| Page 2, ISNE benchmark chart | naive 11.08% · published 2.49% · corrected 1.79% | match |
+| Page 2, ISNE note | "No source-semantics exception flagged." | as intended |
+| Page 2, PNM note | "SOURCE SEMANTICS UNCERTAIN." + full caution text; status row still shows SOURCE SEMANTICS UNCERTAIN | as intended |
